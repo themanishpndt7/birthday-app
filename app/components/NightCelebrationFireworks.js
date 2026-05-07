@@ -21,20 +21,20 @@ const NightCelebrationFireworks = ({ isOpen, onClose }) => {
   const audioContextRef = useRef(null);
 
   const wishes = [
-    "Shweta ❤️",
-    "Mere Bhot Pyre Wifey 💍",
-    "Mere Bhot Pyre Bacche ❤️",
-    "Mere Bhot Pyre Betu 🧿",
-    "Mere Jigar 🫀",
-    "Mere Sbkuch 🌎",
-    "Mine Love",
-    "Mine Cutie",
-    "Princess",
-    "Beautiful Girl",
-    "Sweetheart",
-    "Meri Jaan",
-    "My Everything",
-    "Forever Mine"
+    // "Shweta ❤️",
+    "Mere Bhot Pyre Babu <3 ❤️",
+    "Mere Bhot Pyre Wifey <3💍",
+    "Mere Bhot Pyre Bacche <3❤️",
+    "Mere Bhot Pyre Betu <3🧿",
+    "Mere Jigar <3🫀",
+    "Mere Sbkuch <3🌎",
+    "Mine Love <3❤️",
+    "Mine Cutie <3🥰",
+    "Princess <3👸",
+    "Sweetheart <3😍",
+    "Meri Jaan <3🫀",
+    "My Everything <3🌎",
+    "Forever Mine <3♾️"
   ];
 
   // Initialize stars, clouds, and other background elements
