@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Heart, Sparkles, Gift as GiftIcon, Stars, Music, VolumeX, Infinity, Flame, HeartHandshake, Sparkle, Clock, BookHeart, Cake as CakeIcon, Ticket, Flower2, Crown, Video } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Heart, Sparkles, Gift as GiftIcon, Stars, Music, VolumeX, Infinity, Flame, HeartHandshake, Sparkle, Clock, BookHeart, Cake as CakeIcon, Ticket, Flower2, Crown } from 'lucide-react';
 import NightCelebrationFireworks from './NightCelebrationFireworks';
-import VideoWishes from './VideoWishes';
 
 // --- Advanced Animation Wrappers ---
 const ElegantFade = ({ children, delay = 0 }) => (
@@ -27,7 +26,7 @@ const App = () => {
   const [showIntroCelebration, setShowIntroCelebration] = useState(false);
   const [loveRain, setLoveRain] = useState([]);
   
-  const [activeTab, setActiveTab] = useState('chapters'); // 'chapters', 'cake', 'gift', 'video', 'celebration'
+  const [activeTab, setActiveTab] = useState('chapters'); // 'chapters', 'cake', 'gift', 'celebration'
   const [currentReasonCard, setCurrentReasonCard] = useState(0);
   const [heartsCollected, setHeartsCollected] = useState(0);
   const [loveMeterLevel, setLoveMeterLevel] = useState(0);
@@ -1742,14 +1741,6 @@ const App = () => {
           </div>
         );
 
-      // --- VIDEO WISHES PAGE ---
-      case 'video':
-        return (
-          <div className="flex-1 flex flex-col w-full h-full overflow-y-auto">
-            <VideoWishes />
-          </div>
-        );
-
       // --- STORY CHAPTERS PAGE ---
       case 'chapters':
       default:
@@ -2126,17 +2117,6 @@ const App = () => {
             >
               <GiftIcon className="w-5 h-5 sm:w-6 sm:h-6 mb-0.5" />
               <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider font-nunito leading-tight">Gifts</span>
-            </button>
-
-            <div className="w-px h-6 sm:h-8 bg-pink-100 mx-0.5"></div>
-
-            <button 
-              onClick={() => setActiveTab('video')}
-              className={`flex-1 flex flex-col items-center justify-center py-3 px-1 sm:px-2 rounded-full transition-all duration-300 touch-press-effect ${activeTab === 'video' ? 'text-rose-600 bg-pink-50' : 'text-pink-400'}`}
-              style={{ minHeight: '48px' }}
-            >
-              <Video className="w-5 h-5 sm:w-6 sm:h-6 mb-0.5" />
-              <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider font-nunito leading-tight">Video</span>
             </button>
 
             <div className="w-px h-6 sm:h-8 bg-pink-100 mx-0.5"></div>
