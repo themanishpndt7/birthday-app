@@ -888,21 +888,27 @@ const App = () => {
 
   // --- Touch Swipe Handlers for Chapter Navigation ---
   const handleTouchStart = (e) => {
-    setTouchStartX(e.changedTouches[0].screenX);
+    if (activeTab === 'chapters' || activeTab === 'gift') {
+      setTouchStartX(e.changedTouches[0].screenX);
+    }
   };
 
   const handleTouchEnd = (e) => {
-    setTouchEndX(e.changedTouches[0].screenX);
-    const swipeDistance = touchStartX - e.changedTouches[0].screenX;
-    const minSwipeDistance = 50; // Minimum distance for a valid swipe
-    
-    // Swipe left (moving to next chapter)
-    if (swipeDistance > minSwipeDistance) {
-      handleNext();
-    }
-    // Swipe right (moving to previous chapter)
-    else if (swipeDistance < -minSwipeDistance) {
-      handlePrev();
+    if (activeTab === 'chapters' || activeTab === 'gift') {
+      setTouchEndX(e.changedTouches[0].screenX);
+      const swipeDistance = touchStartX - e.changedTouches[0].screenX;
+      const minSwipeDistance = 50; // Minimum distance for a valid swipe
+      
+      // Swipe left (moving to next chapter)
+      if (Math.abs(swipeDistance) > minSwipeDistance) {
+        if (swipeDistance > minSwipeDistance) {
+          handleNext();
+        }
+        // Swipe right (moving to previous chapter)
+        else if (swipeDistance < -minSwipeDistance) {
+          handlePrev();
+        }
+      }
     }
   };
 
@@ -1314,7 +1320,7 @@ const App = () => {
       // --- FULL GIFTS PAGE WITH ALL 5 INTERACTIVE GIFTS ---
       case 'gift':
         return (
-          <div className="flex flex-col items-center justify-between w-full h-full relative z-10 px-2 md:px-6 py-2 fade-in pt-10" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+          <div className="flex flex-col items-center justify-between w-full h-full relative z-10 px-2 md:px-6 py-2 fade-in pt-10" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} style={{ touchAction: 'pan-y' }}>
             
             {giftParticles.length > 0 && (
               <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden rounded-[2.5rem]">
@@ -1556,7 +1562,7 @@ const App = () => {
       case 'chapters':
       default:
         return (
-          <div className="flex flex-col h-full w-full fade-in relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+          <div className="flex flex-col h-full w-full fade-in relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} style={{ touchAction: 'pan-y' }}>
             <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 w-full flex justify-center mt-2">
               <div className="bg-gradient-to-r from-pink-50 to-rose-50 backdrop-blur-md border border-pink-200 px-5 py-1.5 rounded-full shadow-[0_2px_10px_rgba(251,113,133,0.1)] flex items-center gap-2">
                 <Stars className="w-3 h-3 text-rose-400" />
