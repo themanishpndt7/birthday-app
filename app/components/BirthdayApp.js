@@ -77,6 +77,12 @@ const App = () => {
   const [showWishes, setShowWishes] = useState(false);
   const [allCrackersExploded, setAllCrackersExploded] = useState(false);
 
+  // Special Surprise State
+  const [showSpecialSurpriseModal, setShowSpecialSurpriseModal] = useState(false);
+  const [surpriseParticles, setSurpriseParticles] = useState([]);
+
+  const specialSurpriseVideoUrl = 'https://drive.google.com/file/d/1LtYkifoFurEamQaAmWYg2N2os0LKVGVY/preview';
+
   const totalGifts = 7;
   
   const audioRef = useRef(null);
@@ -1895,6 +1901,51 @@ const App = () => {
                 </div>
               </button>
 
+              {/* Special Surprise Button - Coming Soon */}
+              <button
+                onClick={() => setShowSpecialSurpriseModal(true)}
+                className="relative group w-full max-w-sm"
+                style={{
+                  minHeight: '72px'
+                }}
+              >
+                {/* Animated gradient background */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 group-hover:blur-2xl group-hover:scale-110" />
+                
+                {/* Main button with gradient */}
+                <div className="relative flex items-center justify-center h-full rounded-2xl bg-gradient-to-br from-cyan-500 via-blue-600 to-violet-700 backdrop-blur-md border-2 border-white/30 shadow-2xl hover:shadow-3xl hover:shadow-blue-500/60 transition-all duration-300 group-hover:scale-105 overflow-hidden">
+                  
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-500">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer" />
+                  </div>
+
+                  {/* Floating particles around button */}
+                  {[...Array(8)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-1.5 h-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{
+                        background: `hsl(${200 + i * 20}, 100%, 60%)`,
+                        left: `${Math.cos((i / 8) * Math.PI * 2) * 35 + 50}%`,
+                        top: `${Math.sin((i / 8) * Math.PI * 2) * 35 + 50}%`,
+                        animation: `float 4s ease-in-out infinite`,
+                        animationDelay: `${i * 0.15}s`
+                      }}
+                    />
+                  ))}
+
+                  <div className="relative flex items-center justify-center gap-3 flex-col sm:flex-row">
+                    <span className="text-3xl sm:text-4xl animate-bounce" style={{ animationDelay: '0s' }}>🎁</span>
+                    <div className="flex flex-col sm:flex-row items-center gap-2">
+                      <span className="text-white font-bold font-dancing text-lg sm:text-xl">Special</span>
+                      <span className="text-white font-bold font-dancing text-lg sm:text-xl">Surprise!</span>
+                    </div>
+                    <span className="text-2xl animate-spin-slow">✨</span>
+                  </div>
+                </div>
+              </button>
+
               {/* Special Blessings Cards - Enhanced Grid */}
               <div className="w-full max-w-2xl space-y-3">
                 <div className="text-center mb-4">
@@ -2231,6 +2282,74 @@ const App = () => {
         isOpen={showNightCelebrationModal}
         onClose={() => setShowNightCelebrationModal(false)}
       />
+
+      {/* Special Surprise Modal */}
+      {showSpecialSurpriseModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 overflow-y-auto" style={{ animation: 'fadeIn 0.3s ease-out forwards' }}>
+          <div className="bg-gradient-to-br from-cyan-50 via-blue-50 to-violet-50 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[calc(100dvh-1.5rem)] sm:max-h-[90vh] overflow-hidden relative border-2 border-cyan-300 flex flex-col" style={{ animation: 'scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' }}>
+            
+            {/* Close Button */}
+            <button
+              onClick={() => setShowSpecialSurpriseModal(false)}
+              className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 hover:bg-gray-100 transition-all shadow-lg"
+            >
+              <span className="text-2xl">✕</span>
+            </button>
+
+            {/* Header */}
+            <div className="bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 p-8 text-center relative overflow-hidden">
+              <div className="absolute inset-0 opacity-30">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer"></div>
+              </div>
+              <div className="relative">
+                <div className="text-6xl mb-3 animate-bounce">🎁</div>
+                <h2 className="text-2xl font-dancing text-white font-bold">Special Surprise</h2>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="p-4 sm:p-8 space-y-6 flex-1 min-h-0 overflow-y-auto flex flex-col items-center">
+              <div className="w-full rounded-3xl overflow-hidden border-2 border-cyan-200 bg-black shadow-xl aspect-video max-w-xl mx-auto shrink-0">
+                <iframe
+                  src={specialSurpriseVideoUrl}
+                  title="Special Surprise Video"
+                  className="w-full h-full"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+
+              <div className="w-full max-w-xl space-y-4 text-center shrink-0">
+                <p className="text-gray-700 font-nunito text-sm sm:text-base leading-relaxed px-2">
+                  A personal video message made just for you.
+                </p>
+
+                <div className="bg-gradient-to-r from-cyan-100 to-blue-100 rounded-2xl p-5 border-2 border-cyan-300 space-y-3 shadow-sm">
+                  <p className="text-sm text-cyan-800 font-nunito font-bold">
+                    Special moments, beautifully presented
+                  </p>
+                  <div className="flex justify-center gap-2 pt-2">
+                    <span className="text-xl animate-pulse">✨</span>
+                    <span className="text-xl animate-pulse" style={{animationDelay: '0.2s'}}>💫</span>
+                    <span className="text-xl animate-pulse" style={{animationDelay: '0.4s'}}>🌟</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setShowSpecialSurpriseModal(false)}
+                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all font-dancing text-lg shadow-lg hover:shadow-xl"
+                >
+                  Close Surprise ✨
+                </button>
+              </div>
+            </div>
+
+            {/* Decorative floating elements */}
+            <div className="absolute -bottom-4 -left-4 text-5xl opacity-20 animate-float-slow">🎁</div>
+            <div className="absolute -top-8 -right-4 text-6xl opacity-20 animate-float-slow" style={{animationDelay: '0.3s'}}>✨</div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         @keyframes float {
