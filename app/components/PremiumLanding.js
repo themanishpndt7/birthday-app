@@ -1,326 +1,299 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Heart, Sparkles } from 'lucide-react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowRight, Crown, Heart, Sparkles, Star, Ticket } from 'lucide-react';
+import ExperienceWelcomePopup from './ExperienceWelcomePopup';
+
+const premiumHighlights = [
+  { icon: Heart, label: 'Love', text: 'Every detail is personal' },
+  { icon: Star, label: 'Wish', text: 'A bright birthday moment' },
+  { icon: Ticket, label: 'Gift', text: 'Surprises inside' },
+];
+
+const timelineSteps = ['Seal opened', 'Premium landing', 'Journey unlocked'];
 
 const PremiumLanding = ({ onEnter }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [particles, setParticles] = useState([]);
+  const [showExperiencePopup, setShowExperiencePopup] = useState(false);
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
-  const particlesRef = useRef([]);
 
-  // Create floating particles
+  const particles = useMemo(() => (
+    Array.from({ length: 62 }, (_, index) => ({
+      id: index,
+      x: (index * 37) % 100,
+      y: (index * 23) % 100,
+      size: 1.3 + (index % 6) * 0.55,
+      speed: 0.15 + (index % 7) * 0.024,
+      opacity: 0.2 + (index % 6) * 0.052,
+      color: ['255, 228, 230', '251, 207, 232', '254, 240, 138', '191, 219, 254', '221, 214, 254'][index % 5],
+    }))
+  ), []);
+
   useEffect(() => {
-    const newParticles = Array.from({ length: 50 }).map((_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 3 + 1,
-      opacity: Math.random() * 0.5 + 0.2,
-      duration: Math.random() * 20 + 15,
-      delay: Math.random() * 2,
-    }));
-    setParticles(newParticles);
-    particlesRef.current = newParticles;
-
-    // Trigger animations after component mounts
-    setTimeout(() => setIsLoaded(true), 100);
+    const timer = window.setTimeout(() => setIsLoaded(true), 80);
+    return () => window.clearTimeout(timer);
   }, []);
 
-  // Canvas background animation
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return undefined;
 
     const ctx = canvas.getContext('2d');
     let animationTime = 0;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * ratio;
+      canvas.height = window.innerHeight * ratio;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    };
+
+    const animate = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      animationTime += 0.008;
+
+      const backdrop = ctx.createLinearGradient(0, 0, width, height);
+      backdrop.addColorStop(0, '#fff7f7');
+      backdrop.addColorStop(0.42, '#fff1f7');
+      backdrop.addColorStop(0.72, '#fff7ed');
+      backdrop.addColorStop(1, '#eff6ff');
+      ctx.fillStyle = backdrop;
+      ctx.fillRect(0, 0, width, height);
+
+      const roseGlow = ctx.createRadialGradient(width * 0.68, height * 0.26, 0, width * 0.68, height * 0.26, Math.max(width, height) * 0.56);
+      roseGlow.addColorStop(0, 'rgba(251, 113, 133, 0.20)');
+      roseGlow.addColorStop(0.48, 'rgba(244, 114, 182, 0.08)');
+      roseGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      ctx.fillStyle = roseGlow;
+      ctx.fillRect(0, 0, width, height);
+
+      const blueGlow = ctx.createRadialGradient(width * 0.2, height * 0.82, 0, width * 0.2, height * 0.82, Math.max(width, height) * 0.42);
+      blueGlow.addColorStop(0, 'rgba(103, 232, 249, 0.14)');
+      blueGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      ctx.fillStyle = blueGlow;
+      ctx.fillRect(0, 0, width, height);
+
+      particles.forEach((particle) => {
+        const drift = (animationTime * particle.speed * 118) % 150;
+        const x = ((particle.x / 100) * width + Math.sin(animationTime + particle.id) * 20) % width;
+        const y = ((particle.y / 100) * height - drift + height + 90) % (height + 110);
+
+        ctx.beginPath();
+        ctx.arc(x, y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${particle.color}, ${particle.opacity})`;
+        ctx.shadowColor = `rgba(${particle.color}, 0.76)`;
+        ctx.shadowBlur = particle.size * 7;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      animationRef.current = window.requestAnimationFrame(animate);
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    const animate = () => {
-      animationTime += 0.003;
-
-      // Clear canvas with gradient
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, 'rgba(15, 23, 42, 0.95)');
-      gradient.addColorStop(0.5, 'rgba(88, 28, 93, 0.85)');
-      gradient.addColorStop(1, 'rgba(15, 23, 42, 0.95)');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Draw animated glowing lights
-      for (let i = 0; i < 3; i++) {
-        const x = (Math.sin(animationTime + i) * 0.3 + 0.5) * canvas.width;
-        const y = (Math.cos(animationTime * 0.7 + i) * 0.3 + 0.4) * canvas.height;
-
-        const glowGradient = ctx.createRadialGradient(x, y, 0, x, y, 300);
-        glowGradient.addColorStop(0, `rgba(236, 72, 153, 0.15)`);
-        glowGradient.addColorStop(1, `rgba(236, 72, 153, 0)`);
-        ctx.fillStyle = glowGradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      }
-
-      // Draw floating stars/particles
-      for (let particle of particlesRef.current) {
-        const yOffset = (animationTime / (particle.duration / 100)) % 100;
-        const opacity = Math.sin(animationTime + particle.id) * 0.3 + particle.opacity;
-
-        ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0, opacity)})`;
-        ctx.beginPath();
-        ctx.arc(
-          (particle.x + Math.sin(animationTime * 0.5 + particle.id) * 10) / 100 * canvas.width,
-          (yOffset) / 100 * canvas.height,
-          particle.size,
-          0,
-          Math.PI * 2
-        );
-        ctx.fill();
-      }
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
     animate();
+    window.addEventListener('resize', resizeCanvas);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+        window.cancelAnimationFrame(animationRef.current);
       }
     };
-  }, []);
+  }, [particles]);
+
+  const handleEnterClick = () => {
+    setShowExperiencePopup(true);
+  };
+
+  const handlePopupContinue = () => {
+    setShowExperiencePopup(false);
+    onEnter?.();
+  };
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-black flex flex-col items-center justify-center">
-      {/* Animated Canvas Background */}
+    <main className="relative min-h-[100dvh] w-full overflow-x-hidden bg-rose-50 text-rose-950">
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 -z-10 w-full h-full"
-        style={{ maxWidth: '100vw', maxHeight: '100vh' }}
+        className="fixed inset-0 h-full w-full"
+        aria-hidden="true"
       />
 
-      {/* Animated Gradient Overlay */}
-      <div className="fixed inset-0 -z-5 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-900/5 to-black/20"></div>
-      </div>
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.38),rgba(255,228,230,0.24)),radial-gradient(circle_at_24%_76%,rgba(251,191,36,0.13),transparent_28%)]" />
 
-      {/* Floating Particles with CSS */}
-      {particles.map((particle) => (
+      <section className="relative z-10 mx-auto grid min-h-[100dvh] w-full max-w-6xl items-center gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[1.02fr_0.98fr] lg:px-8">
         <div
-          key={particle.id}
-          className="fixed rounded-full pointer-events-none"
+          className="text-center transition-all duration-700 lg:text-left"
           style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            width: `${particle.size * 2}px`,
-            height: `${particle.size * 2}px`,
-            background: `radial-gradient(circle, rgba(255,255,255,0.8), rgba(236,72,153,0.2))`,
-            animation: `float ${particle.duration}s ease-in-out infinite`,
-            animationDelay: `${particle.delay}s`,
-            opacity: isLoaded ? particle.opacity : 0,
-            transition: 'opacity 1s ease-out',
-            boxShadow: `0 0 ${particle.size * 3}px rgba(236, 72, 153, 0.5)`,
+            opacity: isLoaded ? 1 : 0,
+            transform: isLoaded ? 'translateY(0)' : 'translateY(16px)',
           }}
-        ></div>
-      ))}
-
-      {/* Main Content */}
-      <div className="fixed inset-0 flex flex-col items-center justify-center px-4 sm:px-6 z-10 w-full h-full overflow-y-auto" style={{ paddingBottom: 'var(--safe-area-bottom)', paddingTop: 'var(--safe-area-top)' }}>
-        {/* Premium Background Glow */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-80 h-80 sm:w-96 sm:h-96 bg-gradient-to-r from-pink-600/20 via-purple-600/20 to-pink-600/20 rounded-full blur-3xl"></div>
-        </div>
-
-        {/* Main Container */}
-        <div className="relative z-20 text-center max-w-2xl mx-auto w-full">
-          {/* Decorative Top Element */}
-          <div
-            className="mb-6 sm:mb-8 inline-block"
-            style={{
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'scale(1)' : 'scale(0.8)',
-              transition: 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              transitionDelay: '0.2s',
-            }}
-          >
-            <div className="relative">
-              <Heart className="w-10 h-10 sm:w-12 sm:h-12 text-pink-400 fill-pink-400 mx-auto animate-pulse" />
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-300 absolute top-0 right-0 animate-spin" />
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-300 absolute bottom-0 left-0 animate-spin" style={{ animationDirection: 'reverse' }} />
-            </div>
+        >
+          <div className="mb-5 inline-flex items-center gap-3 rounded-full border border-amber-200 bg-white/85 px-4 py-2 font-nunito text-[11px] font-extrabold uppercase tracking-[0.28em] text-rose-500 shadow-sm backdrop-blur">
+            <Crown className="h-4 w-4 text-amber-500" />
+            <span>Premium Moment</span>
           </div>
 
-          {/* Main Heading */}
-          <h1
-            className="font-dancing text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-purple-200 to-pink-300"
-            style={{
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              transitionDelay: '0.4s',
-              textShadow: '0 0 40px rgba(236, 72, 153, 0.3)',
-              lineHeight: '1.2',
-            }}
-          >
-            Something Special Awaits ❤️
+          <h1 className="mx-auto max-w-3xl font-dancing text-5xl font-bold leading-[0.96] text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-amber-500 drop-shadow-sm sm:text-6xl md:text-7xl lg:mx-0">
+            Something Special Awaits
           </h1>
 
-          {/* Subtitle */}
-          <p
-            className="font-nunito text-base sm:text-lg md:text-xl text-pink-100/80 mb-6 sm:mb-8 leading-relaxed px-2 sm:px-0"
-            style={{
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              transitionDelay: '0.6s',
-            }}
-          >
-            This is not just a birthday wish…
-            <br />
-            <span className="text-lg sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300">
-              It's a memory made with love.
-            </span>
+          <p className="mx-auto mt-6 max-w-2xl font-nunito text-base font-semibold leading-8 text-pink-800/80 sm:text-lg lg:mx-0">
+            The seal is open now. This premium landing sets the mood with
+            motion, depth, and a soft cinematic pause before the full birthday
+            journey begins.
           </p>
 
-          {/* Divider */}
-          <div
-            className="w-16 sm:w-20 h-1 bg-gradient-to-r from-transparent via-pink-400 to-transparent mx-auto mb-8 sm:mb-12"
-            style={{
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'scaleX(1)' : 'scaleX(0)',
-              transition: 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              transitionDelay: '0.8s',
-            }}
-          ></div>
+          <div className="mx-auto mt-7 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-3 lg:mx-0">
+            {premiumHighlights.map(({ icon: Icon, label, text }) => (
+              <div
+                key={label}
+                className="premium-chip min-h-24 rounded-2xl border border-pink-100 bg-white/78 px-4 py-4 text-center shadow-sm backdrop-blur"
+              >
+                <Icon className="mx-auto mb-2 h-5 w-5 text-rose-500" fill={label === 'Love' ? 'currentColor' : 'none'} />
+                <p className="font-nunito text-[10px] font-extrabold uppercase tracking-[0.23em] text-rose-500">
+                  {label}
+                </p>
+                <p className="mt-1 font-nunito text-[11px] font-semibold leading-4 text-pink-800/65">
+                  {text}
+                </p>
+              </div>
+            ))}
+          </div>
 
-          {/* CTA Button */}
           <button
-            onClick={onEnter}
-            className="relative group mb-8 sm:mb-12 mx-auto"
-            style={{
-              opacity: isLoaded ? 1 : 0,
-              transform: isLoaded ? 'scale(1)' : 'scale(0.8)',
-              transition: 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              transitionDelay: '1s',
-            }}
+            type="button"
+            onClick={handleEnterClick}
+            className="group mt-8 inline-flex min-h-14 w-full max-w-sm items-center justify-center gap-3 rounded-full border-2 border-rose-300 bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 px-7 py-4 font-nunito text-sm font-extrabold uppercase tracking-[0.2em] text-white shadow-[0_18px_44px_rgba(225,29,72,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_26px_55px_rgba(225,29,72,0.45)] active:translate-y-0 active:scale-95 sm:max-w-xs"
           >
-            {/* Glow effect */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 group-hover:blur-2xl"></div>
+            <span>Enter The Experience</span>
+            <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+          </button>
+        </div>
 
-            {/* Main button */}
-            <div className="relative px-6 sm:px-8 md:px-12 py-3 sm:py-4 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 backdrop-blur-md border border-white/30 shadow-2xl group-hover:shadow-pink-500/50 transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl overflow-hidden min-h-12 sm:min-h-14 flex items-center justify-center">
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500">
-                <div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent"
-                  style={{
-                    animation: 'shimmer 2s infinite',
-                    transform: 'skewX(-20deg)',
-                  }}
-                ></div>
+        <div
+          className="premium-scene relative mx-auto flex w-full max-w-md justify-center transition-all duration-700 lg:max-w-lg"
+          style={{
+            opacity: isLoaded ? 1 : 0,
+            transform: isLoaded ? 'translateY(0) scale(1)' : 'translateY(18px) scale(0.98)',
+            transitionDelay: '120ms',
+          }}
+        >
+          <div className="absolute -inset-5 rounded-[2rem] bg-gradient-to-br from-rose-200/44 via-amber-100/44 to-cyan-100/34 blur-2xl" />
+          <div className="absolute inset-x-8 top-8 h-[82%] rotate-[-7deg] rounded-[2rem] border border-rose-200 bg-rose-100/55 shadow-xl" />
+          <div className="absolute inset-x-8 top-10 h-[82%] rotate-[6deg] rounded-[2rem] border border-amber-200 bg-amber-100/45 shadow-xl" />
+
+          <div className="premium-pass relative w-full overflow-hidden rounded-[2rem] border-2 border-pink-100 bg-white shadow-[0_34px_100px_rgba(225,29,72,0.24)]">
+            <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-rose-400 via-pink-400 to-amber-300" />
+            <div className="absolute -right-12 top-12 h-40 w-40 rounded-full border border-rose-200/70 premium-orbit" />
+            <div className="absolute -right-4 top-20 h-24 w-24 rounded-full border border-amber-200/80 premium-orbit-reverse" />
+
+            <div className="relative p-6 sm:p-8">
+              <div className="mb-8 flex items-center justify-between gap-4">
+                <div>
+                  <p className="font-nunito text-[10px] font-extrabold uppercase tracking-[0.34em] text-rose-400">
+                    Access Granted
+                  </p>
+                  <p className="mt-2 font-dancing text-3xl font-bold leading-none text-rose-700 sm:text-4xl">
+                    Birthday Story
+                  </p>
+                </div>
+
+                <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-rose-500 via-pink-500 to-amber-400 text-white shadow-[0_16px_36px_rgba(225,29,72,0.36)]">
+                  <Heart className="h-8 w-8" fill="currentColor" />
+                  <Sparkles className="absolute -right-1 -top-1 h-5 w-5 text-amber-100" />
+                </div>
               </div>
 
-              <span className="relative text-white font-nunito font-bold text-base sm:text-lg tracking-wide flex items-center gap-2 sm:gap-3 justify-center whitespace-nowrap">
-                Enter The Experience
-                <Heart className="w-4 h-4 sm:w-5 sm:h-5 group-hover:animate-pulse" />
-              </span>
+              <div className="premium-stage relative mx-auto flex aspect-square w-48 items-center justify-center rounded-full border-2 border-dashed border-rose-200 bg-gradient-to-br from-pink-50 via-white to-amber-50 shadow-inner sm:w-56">
+                <div className="absolute h-[82%] w-[82%] rounded-full border border-rose-100" />
+                <div className="absolute h-[58%] w-[58%] rounded-full border border-amber-100" />
+                <div className="premium-crown flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-rose-500 via-pink-500 to-rose-600 text-white shadow-[0_18px_38px_rgba(225,29,72,0.38)] sm:h-32 sm:w-32">
+                  <Crown className="h-14 w-14" />
+                </div>
+              </div>
+
+              <div className="mt-7 space-y-3">
+                {timelineSteps.map((step, index) => (
+                  <div key={step} className="flex items-center gap-3">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-rose-100 font-nunito text-[10px] font-black text-rose-600">
+                      {index + 1}
+                    </span>
+                    <span className="h-2 flex-1 rounded-full bg-gradient-to-r from-rose-100 via-pink-100 to-amber-100" />
+                    <span className="w-28 text-right font-nunito text-[11px] font-extrabold uppercase tracking-[0.14em] text-rose-500">
+                      {step}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-
-            {/* Animated border */}
-            <div className="absolute inset-0 rounded-full border-2 border-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{
-              borderImage: 'linear-gradient(45deg, #ec4899, #a855f7, #ec4899) 1',
-              animation: 'borderAnim 3s linear infinite',
-            }}></div>
-          </button>
-
-          {/* Scroll Indicator */}
-          <div
-            className="flex flex-col items-center gap-1 sm:gap-2 text-xs sm:text-sm mt-6 sm:mt-8"
-            style={{
-              opacity: isLoaded ? 1 : 0,
-              transition: 'opacity 1s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              transitionDelay: '1.2s',
-            }}
-          >
-            <p className="text-pink-200/60 text-xs sm:text-sm font-nunito tracking-widest uppercase">Scroll to explore</p>
-            <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-pink-300 animate-bounce" />
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Footer Credits */}
-      <div
-        className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 text-center text-pink-200/40 text-xs sm:text-sm font-nunito z-5 px-4"
-        style={{
-          opacity: isLoaded ? 1 : 0,
-          transition: 'opacity 2s ease-out',
-          transitionDelay: '1.5s',
-          paddingBottom: 'var(--safe-area-bottom)',
-        }}
-      >
-        Made with 💕 for someone special
-      </div>
+      <ExperienceWelcomePopup
+        isOpen={showExperiencePopup}
+        onContinue={handlePopupContinue}
+      />
 
-      {/* CSS Animations */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900&display=swap');
 
-        @keyframes float {
-          0% {
-            transform: translateY(100vh) translateX(0);
-            opacity: 0;
-          }
-          10% {
-            opacity: 1;
-          }
-          90% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-100vh) translateX(100px);
-            opacity: 0;
+        .font-dancing { font-family: 'Dancing Script', cursive; }
+        .font-nunito { font-family: 'Nunito', sans-serif; }
+
+        .premium-scene { perspective: 1200px; }
+        .premium-pass {
+          transform: rotateX(7deg) rotateY(-7deg);
+          transform-style: preserve-3d;
+          animation: premiumPassFloat 7s ease-in-out infinite;
+        }
+
+        .premium-chip { transition: transform 260ms ease, box-shadow 260ms ease; }
+        .premium-chip:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 18px 36px rgba(225, 29, 72, 0.14);
+        }
+
+        .premium-crown {
+          transform: translateZ(48px);
+          animation: premiumCrown 3.4s ease-in-out infinite;
+        }
+
+        .premium-orbit { animation: premiumOrbit 14s linear infinite; }
+        .premium-orbit-reverse { animation: premiumOrbit 11s linear infinite reverse; }
+
+        @keyframes premiumPassFloat {
+          0%, 100% { transform: rotateX(7deg) rotateY(-7deg) translateY(0); }
+          50% { transform: rotateX(4deg) rotateY(6deg) translateY(-8px); }
+        }
+
+        @keyframes premiumCrown {
+          0%, 100% { transform: translateZ(48px) scale(1); }
+          50% { transform: translateZ(70px) scale(1.05); }
+        }
+
+        @keyframes premiumOrbit {
+          to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 640px) {
+          .premium-pass {
+            transform: none;
+            animation: premiumMobileFloat 6s ease-in-out infinite;
           }
         }
 
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-
-        @keyframes borderAnim {
-          0% {
-            border-image-source: linear-gradient(45deg, #ec4899, #a855f7, #ec4899);
-          }
-          50% {
-            border-image-source: linear-gradient(225deg, #ec4899, #a855f7, #ec4899);
-          }
-          100% {
-            border-image-source: linear-gradient(45deg, #ec4899, #a855f7, #ec4899);
-          }
-        }
-
-        .font-dancing {
-          font-family: 'Dancing Script', cursive;
-          font-weight: 700;
-          letter-spacing: -2px;
-        }
-
-        .font-nunito {
-          font-family: 'Nunito', sans-serif;
+        @keyframes premiumMobileFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
         }
       `}</style>
-    </div>
+    </main>
   );
 };
 

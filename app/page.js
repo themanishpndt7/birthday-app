@@ -2,14 +2,23 @@
 
 import { useState } from 'react';
 import BirthdayApp from './components/BirthdayApp';
+import IntroMessage from './components/IntroMessage';
 import PremiumLanding from './components/PremiumLanding';
 
 export default function Home() {
-  const [entered, setEntered] = useState(false);
+  const [stage, setStage] = useState('intro');
 
-  if (!entered) {
-    return <PremiumLanding onEnter={() => setEntered(true)} />;
+  if (stage === 'intro') {
+    return <IntroMessage onComplete={() => setStage('seal')} />;
   }
 
-  return <BirthdayApp />;
+  if (stage === 'seal') {
+    return <BirthdayApp showIntroMessageOnOpen={false} onSealOpen={() => setStage('premium')} />;
+  }
+
+  if (stage === 'premium') {
+    return <PremiumLanding onEnter={() => setStage('app')} />;
+  }
+
+  return <BirthdayApp startOpened showIntroMessageOnOpen={false} />;
 }

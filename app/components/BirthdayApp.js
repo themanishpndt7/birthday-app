@@ -3,6 +3,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Heart, Sparkles, Gift as GiftIcon, Stars, Music, VolumeX, Infinity, Flame, HeartHandshake, Sparkle, Clock, BookHeart, Cake as CakeIcon, Ticket, Flower2, Crown } from 'lucide-react';
 import NightCelebrationFireworks from './NightCelebrationFireworks';
+import IntroMessage from './IntroMessage';
+import FooterNavigation from './FooterNavigation';
+import BreakSealPage from './BreakSealPage';
+import PremiumCelebrationTab from './PremiumCelebrationTab';
+import PremiumGiftsTab from './PremiumGiftsTab';
+import SpecialMomentsTab from './SpecialMomentsTab';
 
 // --- Advanced Animation Wrappers ---
 const ElegantFade = ({ children, delay = 0 }) => (
@@ -21,12 +27,13 @@ const ElegantFade = ({ children, delay = 0 }) => (
 );
 
 // --- Main Application ---
-const App = () => {
-  const [isOpened, setIsOpened] = useState(false);
+const App = ({ startOpened = false, showIntroMessageOnOpen = true, onSealOpen } = {}) => {
+  const [showIntroMessage, setShowIntroMessage] = useState(showIntroMessageOnOpen);
+  const [isOpened, setIsOpened] = useState(startOpened);
   const [showIntroCelebration, setShowIntroCelebration] = useState(false);
   const [loveRain, setLoveRain] = useState([]);
   
-  const [activeTab, setActiveTab] = useState('chapters'); // 'chapters', 'cake', 'gift', 'celebration'
+  const [activeTab, setActiveTab] = useState('chapters'); // 'chapters', 'cake', 'gift', 'special', 'celebration'
   const [currentReasonCard, setCurrentReasonCard] = useState(0);
   const [heartsCollected, setHeartsCollected] = useState(0);
   const [loveMeterLevel, setLoveMeterLevel] = useState(0);
@@ -69,7 +76,7 @@ const App = () => {
   // Premium Night Celebration Modal State
   const [showNightCelebrationModal, setShowNightCelebrationModal] = useState(false);
   
-  // Night Celebration State
+ // Night Celebration State
   const [showNightCelebration, setShowNightCelebration] = useState(false);
   const [nightFirecrackers, setNightFirecrackers] = useState([]);
   const [nightFireworks, setNightFireworks] = useState([]);
@@ -386,23 +393,23 @@ const App = () => {
   ];
 
   const giftTitles = [
-    "Gift 1: A Promise 🎁",
-    "Gift 2: Unfading Love 🌸",
-    "Gift 3: Infinite Pass 🎟️",
-    "Gift 4: The Truth 🪞",
-    "Gift 5: Jar of Kisses 🍯",
-    "Gift 6: Forever Adventure ✈️",
-    "Gift 7: My Endless Future ♾️"
+    "🎁 Promise: Our Forever 💫",
+    "🌸 Unfading Love & Memories 🌹",
+    "🎟️ Infinite Coupon Booklet 💕",
+    "🪞 The Honest Truth About You ✨",
+    "🍯 Jar of Sweet Kisses 💋",
+    "✈️ Adventure Awaits Us 🌍",
+    "♾️ My Endless Future with YOU 💕"
   ];
 
   const giftPrompts = [
-    "Tap the ribbon to unwrap",
-    "Tap to bloom your flowers",
-    "Tap to reveal your coupons",
-    "Tap the frosted glass",
-    "Tap to pop the cork",
-    "Tap to open your journey",
-    "Tap to reveal forever"
+    "💫 Tap the ribbon to unwrap your promise 🎀",
+    "🌸 Tap to bloom your beautiful flowers 🌷",
+    "🎟️ Tap to reveal your infinite coupons 💕",
+    "🪞 Tap the glass to see the truth ✨",
+    "🍯 Tap to pop the cork & taste sweetness 🍾",
+    "✈️ Tap to open your adventure map 🗺️",
+    "♾️ Tap to reveal our eternal future 🌟"
   ];
 
   const launchNightCelebration = () => {
@@ -550,10 +557,10 @@ const App = () => {
               <span className="text-2xl">🎉</span> Happiest Happy Birthday <span className="text-2xl">🎉</span>
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-700 to-red-500 font-dancing drop-shadow-lg mb-4 leading-tight">
-              To My Forever Love!
+              Happy Birthday, Beautiful!
             </h1>
             <div className="flex justify-center gap-4 text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-              <span className="text-rose-600">♥️ YOU ♥️</span>
+              <span className="text-rose-600">💕 YOU 💕</span>
             </div>
             <p className="text-lg sm:text-xl md:text-2xl text-pink-700 font-nunito font-bold tracking-widest flex items-center justify-center gap-2">
               <span>🫂</span> <span>♾️</span> <span>🧿</span> <span>👫🏻</span>
@@ -562,8 +569,8 @@ const App = () => {
           <ElegantFade delay={500}>
             <div className="relative p-10 mt-6 bg-gradient-to-br from-white/85 via-pink-50/70 to-rose-50/50 rounded-3xl border-2 border-pink-200 shadow-xl backdrop-blur-sm">
               <p className="text-base md:text-lg text-pink-900 font-nunito leading-relaxed font-semibold">
-                Today marks the day the <span className="font-extrabold text-rose-600 text-lg bg-gradient-to-r from-pink-100 to-rose-100 px-2 py-1 rounded-lg inline-block">world 🌍</span> became infinitely <span className="font-extrabold text-rose-500 text-lg">brighter ✨</span><br className="hidden md:inline"/>
-                because <span className="font-black text-rose-700 text-xl underline decoration-pink-400 decoration-2">YOU</span> were born! 🎂💕
+                Today is all about celebrating <span className="font-extrabold text-rose-600 text-lg bg-gradient-to-r from-pink-100 to-rose-100 px-2 py-1 rounded-lg inline-block">the most amazing person 👑</span> in my <span className="font-extrabold text-rose-500 text-lg">world 🌍</span><br className="hidden md:inline"/>
+                You make every day feel like a <span className="font-black text-rose-700 text-xl underline decoration-pink-400 decoration-2">celebration 🎉</span> 💕
               </p>
             </div>
           </ElegantFade>
@@ -1040,6 +1047,11 @@ const App = () => {
   };
 
   const openEnvelope = () => {
+    if (onSealOpen) {
+      onSealOpen();
+      return;
+    }
+
     setIsOpened(true);
     triggerIntroCelebration();
     if (audioRef.current) {
@@ -1049,6 +1061,22 @@ const App = () => {
   };
 
   // --- Intro: Wax-Sealed Envelope ---
+  if (!isOpened) {
+    return (
+      <BreakSealPage
+        floatingHearts={floatingHearts}
+        floatingSparkles={floatingSparkles}
+        isLandscape={isLandscape}
+        isMobile={isMobile}
+        isTouch={isTouch}
+        mousePos={mousePos}
+        onMouseMove={handleMouseMove}
+        onOpen={openEnvelope}
+      />
+    );
+  }
+
+  // --- Legacy Intro: Wax-Sealed Envelope ---
   if (!isOpened) {
     return (
       <div 
@@ -1269,6 +1297,43 @@ const App = () => {
 
   // --- Main Render Logic based on activeTab ---
   const renderContent = () => {
+    if (activeTab === 'gift') {
+      return (
+        <PremiumGiftsTab
+          currentGiftPage={currentGiftPage}
+          giftsOpened={giftsOpened}
+          giftParticles={giftParticles}
+          isAnimating={isAnimating}
+          onGiftOpen={triggerGiftSparkles}
+          onPrevious={handlePrev}
+          onNext={handleNext}
+        />
+      );
+    }
+
+    if (activeTab === 'special') {
+      return (
+        <SpecialMomentsTab
+          daysAlive={daysAlive}
+          onOpenGifts={() => setActiveTab('gift')}
+          onOpenCelebration={() => {
+            setActiveTab('celebration');
+            setCelebrationFireworks([]);
+          }}
+        />
+      );
+    }
+
+    if (activeTab === 'celebration') {
+      return (
+        <PremiumCelebrationTab
+          daysAlive={daysAlive}
+          onNightCelebration={() => setShowNightCelebrationModal(true)}
+          onSpecialSurprise={() => setShowSpecialSurpriseModal(true)}
+        />
+      );
+    }
+
     switch(activeTab) {
       
       // --- CAKE PAGE ---
@@ -1278,12 +1343,12 @@ const App = () => {
             <div className="h-24 flex flex-col justify-center items-center w-full">
               <ElegantFade delay={100}>
                 <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500 font-dancing mb-2 drop-shadow-sm text-center">
-                  {cakeStep === 0 ? "Make a Wish, My Love ✨" : cakeStep === 1 ? "Time to Cut the Cake 🔪" : "Happy Birthday, My Heart!"}
+                  {cakeStep === 0 ? "🎂 Make a Wish, Beautiful ✨" : cakeStep === 1 ? "🔪 Time to Cut the Cake 🔪" : "🎉 Happy Birthday, My Heart! 🎉"}
                 </h2>
               </ElegantFade>
               <ElegantFade delay={400}>
                 <p className={`text-sm text-pink-500 font-nunito transition-opacity duration-1000 ${cakeStep === 2 ? 'opacity-0' : 'animate-pulse'}`}>
-                  {cakeStep === 0 ? "Close your eyes, make a wish, and tap to blow the candles 🕯️" : "Tap the cake to slice it together 🎂"}
+                  {cakeStep === 0 ? "✨ Close your eyes, make a wish, and tap to blow the candles 🕯️ 💫" : "🎂 Tap the cake to slice it together 🎂"}
                 </p>
               </ElegantFade>
             </div>
@@ -1494,14 +1559,28 @@ const App = () => {
               
               {currentGiftPage === 0 && (
                 <div className="relative w-full h-full flex flex-col items-center justify-center cursor-pointer group" onClick={() => !giftsOpened[0] && triggerGiftSparkles(0)}>
+                  {giftsOpened[0] && (
+                    <div className="absolute w-full h-full top-0 left-0 flex justify-center pointer-events-none">
+                       {[...Array(12)].map((_, i) => (
+                         <div key={i} className="absolute text-2xl animate-flower-bloom" style={{
+                            '--tx': `${(i - 5.5) * 25}px`,
+                            '--ty': `${-20 - Math.random() * 50}px`,
+                            animationDelay: `${i * 0.08}s`
+                         }}>
+                            {['💖', '✨', '💫', '🌟'][Math.floor(Math.random()*4)]}
+                         </div>
+                       ))}
+                    </div>
+                  )}
                   <div className={`absolute transition-all duration-700 z-10 flex flex-col items-center w-full px-4 ${giftsOpened[0] ? 'opacity-100 top-[-10px] translate-y-0' : 'opacity-0 top-1/2 translate-y-10 pointer-events-none'}`}>
                      <div className="bg-white/95 backdrop-blur-md p-5 md:p-6 rounded-2xl shadow-xl border border-pink-100 text-center w-full max-w-[280px] relative">
                         <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-pink-50 rounded-full flex items-center justify-center border border-white shadow-md">
                           <Heart className="w-6 h-6 text-rose-500 animate-heartbeat" fill="currentColor"/>
                         </div>
-                        <h3 className="text-xl font-bold text-rose-600 font-dancing mt-4 mb-2">My Greatest Gift</h3>
-                        <p className="text-sm text-pink-800 font-nunito leading-tight">...is the privilege of waking up knowing you are mine.</p>
-                        <div className="flex justify-center gap-3 mt-4 text-xl">
+                        <h3 className="text-xl font-bold text-rose-600 font-dancing mt-4 mb-3">My Greatest Gift</h3>
+                        <p className="text-sm text-pink-800 font-nunito leading-relaxed mb-4">The privilege of waking up knowing you are mine.</p>
+                        <p className="text-xs text-rose-500 italic mb-4">You are my whole world</p>
+                        <div className="flex justify-center gap-4 text-2xl">
                           <span className="animate-float-slow" style={{animationDelay: '0s'}}>🌍</span>
                           <span className="animate-float-slow" style={{animationDelay: '0.2s'}}>💍</span>
                           <span className="animate-float-slow" style={{animationDelay: '0.4s'}}>🧿</span>
@@ -1509,15 +1588,15 @@ const App = () => {
                      </div>
                   </div>
 
-                  <div className={`relative z-20 transition-all duration-700 ${giftsOpened[0] ? 'translate-y-28 scale-75 opacity-60' : 'translate-y-0 hover:scale-105'}`}>
-                    <div className={`w-36 h-10 bg-gradient-to-b from-rose-300 to-rose-400 rounded-sm border-2 border-rose-400 relative z-20 shadow-md transition-all duration-1000 origin-bottom-right ${giftsOpened[0] ? 'transform -translate-y-24 translate-x-12 rotate-12 opacity-0' : ''}`}>
+                  <div className={`relative z-20 transition-all duration-700 ${giftsOpened[0] ? 'translate-y-28 scale-75 opacity-60' : 'translate-y-0 hover:scale-110'}`}>
+                    <div className={`w-36 h-10 bg-gradient-to-b from-rose-300 to-rose-400 rounded-sm border-2 border-rose-400 relative z-20 shadow-lg hover:shadow-xl transition-shadow duration-500 origin-bottom-right ${giftsOpened[0] ? 'transform -translate-y-24 translate-x-12 rotate-12 opacity-0' : ''}`}>
                        <div className="absolute left-1/2 -translate-x-1/2 w-8 h-full bg-amber-100 border-x border-amber-200"></div>
                        <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex items-end">
                          <div className="w-8 h-8 border-[3px] border-amber-200 rounded-[50%_50%_0_50%] transform rotate-45 translate-x-1"></div>
                          <div className="w-8 h-8 border-[3px] border-amber-200 rounded-[50%_50%_50%_0] transform -rotate-45 -translate-x-1"></div>
                        </div>
                     </div>
-                    <div className="w-32 h-24 bg-gradient-to-br from-rose-400 to-rose-500 mx-auto rounded-b-md border-x-2 border-b-2 border-rose-500 relative shadow-xl overflow-hidden">
+                    <div className="w-32 h-24 bg-gradient-to-br from-rose-400 to-rose-500 mx-auto rounded-b-md border-x-2 border-b-2 border-rose-500 relative shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-500 group-hover:from-rose-300 group-hover:to-rose-400">
                        <div className="absolute left-1/2 -translate-x-1/2 w-8 h-full bg-amber-200 border-x border-amber-300 shadow-inner"></div>
                        {giftsOpened[0] && <div className="absolute top-0 w-full h-4 bg-black/10 rounded-t-full blur-sm"></div>}
                     </div>
@@ -1530,35 +1609,39 @@ const App = () => {
                    <div className={`absolute transition-all duration-700 z-10 flex flex-col items-center w-full px-4 ${giftsOpened[1] ? 'opacity-100 top-[-10px] translate-y-0' : 'opacity-0 top-1/2 translate-y-10 pointer-events-none'}`}>
                       {giftsOpened[1] && (
                          <div className="absolute w-full h-full top-0 left-0 flex justify-center pointer-events-none">
-                            {[...Array(6)].map((_, i) => (
+                            {[...Array(12)].map((_, i) => (
                                <div key={i} className="absolute text-3xl animate-flower-bloom" style={{
-                                  '--tx': `${(i - 2.5) * 30}px`,
-                                  '--ty': `${-20 - Math.random() * 40}px`,
-                                  animationDelay: `${i * 0.1}s`
+                                  '--tx': `${(i - 5.5) * 35}px`,
+                                  '--ty': `${-20 - Math.random() * 50}px`,
+                                  animationDelay: `${i * 0.08}s`
                                }}>
-                                  {['🌸', '🌷', '🌹', '🌺'][Math.floor(Math.random()*4)]}
+                                  {['🌸', '🌷', '🌹', '🌺', '💐'][Math.floor(Math.random()*5)]}
                                </div>
                             ))}
                          </div>
                       )}
-                      <div className="bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg border border-pink-100 text-center w-full max-w-[240px] mt-8 relative z-10">
-                        <p className="text-rose-600 font-bold font-nunito text-sm mb-1">Real flowers fade...</p>
-                        <p className="text-xs text-pink-800 font-medium">But my love for you will bloom eternally. 🌿💕</p>
+                      <div className="bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-pink-100 text-center w-full max-w-[260px] relative z-10">
+                        <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-pink-50 rounded-full flex items-center justify-center border border-white shadow-md">
+                          <Flower2 className="w-6 h-6 text-rose-400" />
+                        </div>
+                        <h3 className="text-xl font-bold text-rose-600 font-dancing mt-4 mb-2">Eternal Flowers</h3>
+                        <p className="text-rose-600 font-bold font-nunito text-sm mb-2">Real flowers fade...</p>
+                        <p className="text-xs text-pink-800 font-medium leading-relaxed">But my love for you will bloom eternally and forever. 🌿💕</p>
+                        <p className="text-rose-500 italic text-xs mt-2">You are my eternal garden of love</p>
                       </div>
                    </div>
 
-                   <div className={`relative z-20 transition-all duration-700 ${giftsOpened[1] ? 'translate-y-28 scale-75 opacity-80' : 'translate-y-0 hover:scale-105'}`}>
-                      <div className="w-32 h-40 bg-pink-100 rounded-b-2xl border border-pink-200 shadow-md relative overflow-hidden">
+                   <div className={`relative z-20 transition-all duration-700 ${giftsOpened[1] ? 'translate-y-28 scale-75 opacity-80' : 'translate-y-0 hover:scale-110'}`}>
+                      <div className="w-32 h-40 bg-gradient-to-b from-pink-100 to-rose-100 rounded-b-2xl border-2 border-pink-300 shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden group-hover:from-pink-50 group-hover:to-rose-50">
                          <div className="absolute top-0 w-full h-full bg-gradient-to-b from-transparent to-pink-200/50"></div>
-                         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-2 h-3/4 opacity-60">
-                           <div className="w-1 h-full bg-green-300 transform -rotate-6 rounded-full"></div>
-                           <div className="w-1 h-full bg-green-400 rounded-full"></div>
-                           <div className="w-1 h-full bg-green-300 transform rotate-6 rounded-full"></div>
+                         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-2 h-3/4">
+                           <div className="w-1.5 h-full bg-green-400 transform -rotate-6 rounded-full shadow-md"></div>
+                           <div className="w-1.5 h-full bg-green-500 rounded-full shadow-md"></div>
+                           <div className="w-1.5 h-full bg-green-400 transform rotate-6 rounded-full shadow-md"></div>
                          </div>
-                         <div className={`absolute top-0 w-full h-1/2 bg-white/40 backdrop-blur-sm border-b border-white/60 transform origin-top transition-all duration-1000 ${giftsOpened[1] ? 'rotate-x-180 opacity-0' : 'clip-triangle'}`}></div>
                       </div>
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-20">
-                         <Flower2 className="w-5 h-5 text-rose-400" />
+                      <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-white p-2 rounded-full shadow-md z-20 group-hover:scale-125 transition-transform duration-300">
+                         <Flower2 className="w-6 h-6 text-rose-500 animate-pulse" />
                       </div>
                    </div>
                 </div>
@@ -1566,43 +1649,63 @@ const App = () => {
 
               {currentGiftPage === 2 && (
                 <div className="relative w-full h-full flex flex-col items-center justify-center cursor-pointer group" onClick={() => !giftsOpened[2] && triggerGiftSparkles(2)}>
-                   <div className="perspective-1000 w-64 h-40">
-                      <div className={`w-full h-full transition-transform duration-1000 transform-style-3d relative ${giftsOpened[2] ? 'rotate-y-180' : 'hover:scale-105'}`}>
-                         <div className="absolute inset-0 backface-hidden w-full h-full bg-gradient-to-r from-rose-300 to-pink-400 rounded-xl shadow-lg border-2 border-dashed border-white flex flex-col items-center justify-center">
-                            <Ticket className="w-10 h-10 text-white mb-2" />
-                            <p className="text-white font-bold tracking-widest uppercase">Love Coupon</p>
-                            <p className="text-white/80 text-xs mt-1">Tap to Reveal</p>
-                         </div>
-                         <div className="absolute inset-0 backface-hidden w-full h-full bg-white rounded-xl shadow-xl border border-pink-200 rotate-y-180 p-4 flex flex-col justify-center items-center text-center">
-                            <div className="border border-dashed border-pink-300 w-full h-full rounded-lg flex flex-col justify-center items-center bg-pink-50/50 p-2">
-                              <h4 className="text-rose-600 font-bold font-nunito uppercase tracking-wider text-sm mb-2 border-b border-pink-200 pb-1 w-full">Valid For Life</h4>
-                              <ul className="text-xs text-pink-800 space-y-2 font-medium text-left">
-                                <li>✅ Endless Cuddles & Hugs</li>
-                                <li>✅ Late Night Deep Talks</li>
-                                <li>✅ My Unconditional Love</li>
-                              </ul>
-                            </div>
-                         </div>
+                   <div className={`absolute transition-all duration-700 z-10 flex flex-col items-center w-full px-4 ${giftsOpened[2] ? 'opacity-100 top-[-10px] translate-y-0' : 'opacity-0 top-1/2 translate-y-10 pointer-events-none'}`}>
+                    <div className="bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-pink-100 text-center w-full max-w-[280px] relative">
+                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-rose-50 rounded-full flex items-center justify-center border border-white shadow-md">
+                        <Ticket className="w-6 h-6 text-rose-500 animate-pulse" />
                       </div>
-                   </div>
+                      <h3 className="text-xl font-bold text-rose-600 font-dancing mt-4 mb-2">Love Coupon Valid For Life</h3>
+                      <ul className="text-xs text-pink-800 space-y-2 font-medium text-left mb-4">
+                        <li>✅ Endless Cuddles & Hugs</li>
+                        <li>✅ Late Night Deep Talks</li>
+                        <li>✅ My Unconditional Love</li>
+                        <li>✅ Forever & Always</li>
+                      </ul>
+                      <p className="text-rose-500 font-nunito text-sm italic">No expiry date ever! 💕</p>
+                    </div>
+                  </div>
+
+                  <div className={`relative z-20 transition-all duration-700 ${giftsOpened[2] ? 'translate-y-32 scale-75 opacity-60' : 'translate-y-0 hover:scale-105'}`}>
+                    <div className={`w-40 h-28 bg-gradient-to-r from-rose-300 to-pink-400 rounded-2xl border-2 border-dashed border-white shadow-xl flex flex-col items-center justify-center relative overflow-hidden group-hover:shadow-2xl transition-shadow ${giftsOpened[2] ? 'animate-pulse' : ''}`}>
+                      <div className="absolute inset-0 bg-white/10 backdrop-blur-[2px]"></div>
+                      <Ticket className="w-10 h-10 text-white mb-2 relative z-10" />
+                      <p className="text-white font-bold tracking-widest uppercase text-sm relative z-10">Love Coupon</p>
+                      <p className="text-white/80 text-xs mt-1 relative z-10 animate-bounce">Tap to Reveal</p>
+                    </div>
+                  </div>
                 </div>
               )}
 
               {currentGiftPage === 3 && (
                 <div className="relative w-full h-full flex flex-col items-center justify-center cursor-pointer group" onClick={() => !giftsOpened[3] && triggerGiftSparkles(3)}>
-                   <div className={`w-56 h-64 rounded-t-full rounded-b-xl border-4 border-rose-200 shadow-lg relative overflow-hidden transition-all duration-1000 ${giftsOpened[3] ? 'bg-gradient-to-br from-pink-100 to-white' : 'bg-white/40 backdrop-blur-md hover:backdrop-blur-sm hover:scale-105'}`}>
-                      <div className="absolute top-2 left-1/2 -translate-x-1/2"><Crown className="w-6 h-6 text-rose-300"/></div>
+                   {giftsOpened[3] && (
+                    <div className="absolute w-full h-full top-0 left-0 flex justify-center pointer-events-none">
+                       {[...Array(15)].map((_, i) => (
+                         <div key={i} className="absolute text-2xl animate-flower-bloom" style={{
+                            '--tx': `${(Math.random() - 0.5) * 150}px`,
+                            '--ty': `${-20 - Math.random() * 60}px`,
+                            animationDelay: `${i * 0.1}s`
+                         }}>
+                            {['👑', '✨', '💖', '🌟'][Math.floor(Math.random()*4)]}
+                         </div>
+                       ))}
+                    </div>
+                  )}
+                   <div className={`w-56 h-64 rounded-t-full rounded-b-xl border-4 border-rose-300 shadow-xl relative overflow-hidden transition-all duration-1000 group-hover:shadow-2xl ${giftsOpened[3] ? 'bg-gradient-to-br from-pink-100 to-rose-50' : 'bg-white/40 backdrop-blur-md hover:scale-110'}`}>
+                      <div className="absolute top-2 left-1/2 -translate-x-1/2 animate-bounce"><Crown className="w-7 h-7 text-rose-500"/></div>
                       <div className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-1000 ${giftsOpened[3] ? 'opacity-0' : 'opacity-100'}`}>
-                         <p className="text-pink-500 font-nunito font-semibold tracking-wider">Look inside...</p>
+                         <p className="text-rose-600 font-nunito font-bold tracking-widest animate-pulse">Look inside...</p>
                       </div>
                       <div className={`absolute inset-0 flex flex-col items-center justify-center p-6 text-center transition-all duration-1000 ${giftsOpened[3] ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'}`}>
-                         <Heart className="w-10 h-10 text-rose-400 mb-4 animate-heartbeat" fill="currentColor"/>
-                         <p className="text-rose-700 font-bold font-nunito text-sm leading-relaxed">
+                         <Heart className="w-12 h-12 text-rose-500 mb-4 animate-heartbeat" fill="currentColor"/>
+                         <h3 className="text-rose-700 font-bold font-dancing text-xl mb-3">My Crown Jewel</h3>
+                         <p className="text-rose-700 font-bold font-nunito text-sm leading-relaxed mb-2">
                            "The greatest gift I have ever received in this lifetime..."
                          </p>
-                         <p className="text-rose-500 font-dancing text-2xl mt-4 bg-pink-50 py-1 px-4 rounded-full border border-pink-100">
+                         <p className="text-rose-500 font-dancing text-2xl bg-pink-50 py-2 px-4 rounded-full border-2 border-pink-200">
                            ...is YOU.
                          </p>
+                         <p className="text-rose-400 italic text-xs mt-3">My forever queen/king 👑</p>
                       </div>
                    </div>
                 </div>
@@ -1613,32 +1716,36 @@ const App = () => {
                   <div className={`absolute transition-all duration-700 z-10 flex flex-col items-center w-full px-4 ${giftsOpened[4] ? 'opacity-100 top-[-10px] translate-y-0' : 'opacity-0 top-1/2 translate-y-10 pointer-events-none'}`}>
                     {giftsOpened[4] && (
                       <div className="absolute w-full h-full top-0 left-0 flex justify-center pointer-events-none">
-                         {[...Array(8)].map((_, i) => (
-                            <div key={i} className="absolute text-xl animate-flower-bloom" style={{
-                               '--tx': `${(Math.random() - 0.5) * 120}px`,
-                               '--ty': `${-20 - Math.random() * 40}px`,
-                               animationDelay: `${i * 0.15}s`
+                         {[...Array(16)].map((_, i) => (
+                            <div key={i} className="absolute text-2xl animate-flower-bloom" style={{
+                               '--tx': `${(Math.random() - 0.5) * 150}px`,
+                               '--ty': `${-20 - Math.random() * 50}px`,
+                               animationDelay: `${i * 0.1}s`
                             }}>
                                💋
                             </div>
                          ))}
                       </div>
                     )}
-                    <div className="bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg border border-pink-100 text-center w-full max-w-[260px] mt-6 relative z-10">
-                      <p className="text-rose-600 font-bold font-nunito text-sm mb-1">A Jar of Kisses 🍯</p>
-                      <p className="text-xs text-pink-800 font-medium leading-relaxed">For those days when I can't be right next to you, just open this jar. I love you endlessly. 😘</p>
+                    <div className="bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-pink-100 text-center w-full max-w-[280px] relative z-10">
+                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-pink-50 rounded-full flex items-center justify-center border border-white shadow-md">
+                        <span className="text-xl">🍯</span>
+                      </div>
+                      <h3 className="text-xl font-bold text-rose-600 font-dancing mt-4 mb-2">A Jar of Kisses</h3>
+                      <p className="text-sm text-pink-800 font-nunito leading-relaxed mb-2">For those days when I can't be right next to you...</p>
+                      <p className="text-rose-500 italic text-sm">Just open this jar and know how much I love you. Each kiss is filled with endless affection. 😘</p>
                     </div>
                   </div>
 
-                  <div className={`relative z-20 transition-all duration-700 flex flex-col items-center ${giftsOpened[4] ? 'translate-y-28 scale-75 opacity-80' : 'translate-y-0 hover:scale-105'}`}>
-                     <div className={`w-12 h-6 bg-amber-700/80 rounded-t-md border-b-2 border-amber-900 transition-all duration-700 origin-bottom mx-auto ${giftsOpened[4] ? 'transform -translate-y-16 -translate-x-8 -rotate-45 opacity-0' : ''}`}></div>
-                     <div className="w-24 h-32 bg-white/30 backdrop-blur-sm rounded-3xl border-2 border-white/60 shadow-[inset_0_0_20px_rgba(255,255,255,0.8),0_10px_20px_rgba(251,113,133,0.1)] relative overflow-hidden flex flex-col justify-end p-2">
-                        <div className="absolute top-2 left-2 w-4 h-16 bg-white/40 rounded-full blur-[1px]"></div>
-                        <div className={`flex flex-wrap-reverse justify-center gap-1 transition-opacity duration-1000 ${giftsOpened[4] ? 'opacity-20' : 'opacity-100'}`}>
-                           {[...Array(12)].map((_, i) => <Heart key={i} className="w-4 h-4 text-rose-500" fill="currentColor"/>)}
+                  <div className={`relative z-20 transition-all duration-700 flex flex-col items-center ${giftsOpened[4] ? 'translate-y-28 scale-75 opacity-80' : 'translate-y-0 hover:scale-110'}`}>
+                     <div className={`w-12 h-6 bg-amber-700/80 rounded-t-md border-b-2 border-amber-900 transition-all duration-700 origin-bottom mx-auto shadow-lg ${giftsOpened[4] ? 'transform -translate-y-16 -translate-x-8 -rotate-45 opacity-0' : ''}`}></div>
+                     <div className="w-28 h-36 bg-gradient-to-b from-white/40 to-white/60 backdrop-blur-sm rounded-3xl border-2 border-white/70 shadow-[inset_0_0_20px_rgba(255,255,255,0.8),0_10px_20px_rgba(251,113,133,0.2)] relative overflow-hidden flex flex-col justify-end p-3 group-hover:shadow-2xl transition-shadow">
+                        <div className="absolute top-2 left-2 w-5 h-20 bg-white/50 rounded-full blur-[2px]"></div>
+                        <div className={`flex flex-wrap-reverse justify-center gap-2 transition-opacity duration-1000 ${giftsOpened[4] ? 'opacity-20' : 'opacity-100'}`}>
+                           {[...Array(15)].map((_, i) => <Heart key={i} className="w-5 h-5 text-rose-500 animate-pulse" fill="currentColor" style={{animationDelay: `${i * 0.1}s`}}/> )}
                         </div>
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/90 px-3 py-1 rounded shadow-sm border border-pink-100 flex items-center justify-center whitespace-nowrap rotate-[-5deg]">
-                          <span className="text-[10px] font-bold text-rose-600 uppercase tracking-widest font-nunito">Kisses</span>
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/95 px-3 py-1.5 rounded-full shadow-md border border-pink-200 flex items-center justify-center whitespace-nowrap">
+                          <span className="text-xs font-bold text-rose-600 uppercase tracking-widest font-nunito">Endless</span>
                         </div>
                      </div>
                   </div>
@@ -1648,13 +1755,14 @@ const App = () => {
               {currentGiftPage === 5 && (
                 <div className="relative w-full h-full flex flex-col items-center justify-center cursor-pointer group" onClick={() => !giftsOpened[5] && triggerGiftSparkles(5)}>
                   <div className={`absolute transition-all duration-700 z-10 flex flex-col items-center w-full px-4 ${giftsOpened[5] ? 'opacity-100 top-[-10px] translate-y-0' : 'opacity-0 top-1/2 translate-y-10 pointer-events-none'}`}>
-                    <div className="bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-pink-100 text-center w-full max-w-[280px] relative">
-                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-pink-50 rounded-full flex items-center justify-center border border-white shadow-md">
-                        <Sparkles className="w-6 h-6 text-rose-500 animate-pulse" />
+                    <div className="bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-blue-100 text-center w-full max-w-[280px] relative">
+                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center border border-white shadow-md">
+                        <Sparkles className="w-6 h-6 text-blue-500 animate-pulse" />
                       </div>
-                      <h3 className="text-xl font-bold text-rose-600 font-dancing mt-4 mb-2">Forever Adventure</h3>
-                      <p className="text-sm text-pink-800 font-nunito leading-tight">A promise that every road ahead will be walked with you, hand in hand. ✈️💞</p>
-                      <div className="flex justify-center gap-3 mt-4 text-xl">
+                      <h3 className="text-xl font-bold text-blue-600 font-dancing mt-4 mb-2">Forever Adventure</h3>
+                      <p className="text-sm text-blue-800 font-nunito leading-relaxed mb-3">A promise that every road ahead will be walked with you, hand in hand.</p>
+                      <p className="text-rose-500 italic text-sm mb-3">Let's explore the world together! 🌍✈️</p>
+                      <div className="flex justify-center gap-4 text-2xl">
                         <span className="animate-float-slow" style={{animationDelay: '0s'}}>🌍</span>
                         <span className="animate-float-slow" style={{animationDelay: '0.2s'}}>🗺️</span>
                         <span className="animate-float-slow" style={{animationDelay: '0.4s'}}>✈️</span>
@@ -1662,15 +1770,15 @@ const App = () => {
                     </div>
                   </div>
 
-                  <div className={`relative z-20 transition-all duration-700 ${giftsOpened[5] ? 'translate-y-28 scale-75 opacity-60' : 'translate-y-0 hover:scale-105'}`}>
-                    <div className={`w-36 h-10 bg-gradient-to-b from-indigo-300 to-blue-400 rounded-sm border-2 border-blue-400 relative z-20 shadow-md transition-all duration-1000 origin-bottom-right ${giftsOpened[5] ? 'transform -translate-y-24 translate-x-12 rotate-12 opacity-0' : ''}`}>
+                  <div className={`relative z-20 transition-all duration-700 ${giftsOpened[5] ? 'translate-y-28 scale-75 opacity-60' : 'translate-y-0 hover:scale-110'}`}>
+                    <div className={`w-36 h-10 bg-gradient-to-b from-blue-300 to-cyan-400 rounded-sm border-2 border-blue-400 relative z-20 shadow-lg hover:shadow-xl transition-shadow origin-bottom-right ${giftsOpened[5] ? 'transform -translate-y-24 translate-x-12 rotate-12 opacity-0' : ''}`}>
                       <div className="absolute left-1/2 -translate-x-1/2 w-8 h-full bg-white/70 border-x border-white/90"></div>
                       <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex items-end">
-                        <div className="w-8 h-8 border-[3px] border-blue-100 rounded-[50%_50%_0_50%] transform rotate-45 translate-x-1"></div>
-                        <div className="w-8 h-8 border-[3px] border-blue-100 rounded-[50%_50%_50%_0] transform -rotate-45 -translate-x-1"></div>
+                        <div className="w-8 h-8 border-[3px] border-cyan-100 rounded-[50%_50%_0_50%] transform rotate-45 translate-x-1"></div>
+                        <div className="w-8 h-8 border-[3px] border-cyan-100 rounded-[50%_50%_50%_0] transform -rotate-45 -translate-x-1"></div>
                       </div>
                     </div>
-                    <div className="w-32 h-24 bg-gradient-to-br from-indigo-400 to-blue-500 mx-auto rounded-b-md border-x-2 border-b-2 border-blue-500 relative shadow-xl overflow-hidden">
+                    <div className="w-32 h-24 bg-gradient-to-br from-blue-400 to-cyan-500 mx-auto rounded-b-md border-x-2 border-b-2 border-cyan-500 relative shadow-xl overflow-hidden hover:shadow-2xl transition-shadow group-hover:from-blue-300 group-hover:to-cyan-400">
                       <div className="absolute left-1/2 -translate-x-1/2 w-8 h-full bg-white/30 border-x border-white/40 shadow-inner"></div>
                     </div>
                   </div>
@@ -1680,13 +1788,27 @@ const App = () => {
               {currentGiftPage === 6 && (
                 <div className="relative w-full h-full flex flex-col items-center justify-center cursor-pointer group" onClick={() => !giftsOpened[6] && triggerGiftSparkles(6)}>
                   <div className={`absolute transition-all duration-700 z-10 flex flex-col items-center w-full px-4 ${giftsOpened[6] ? 'opacity-100 top-[-10px] translate-y-0' : 'opacity-0 top-1/2 translate-y-10 pointer-events-none'}`}>
-                    <div className="bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-pink-100 text-center w-full max-w-[280px] relative">
-                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-rose-50 rounded-full flex items-center justify-center border border-white shadow-md">
-                        <Heart className="w-6 h-6 text-rose-500 animate-heartbeat" fill="currentColor" />
+                    {giftsOpened[6] && (
+                      <div className="absolute w-full h-full top-0 left-0 flex justify-center pointer-events-none">
+                         {[...Array(14)].map((_, i) => (
+                            <div key={i} className="absolute text-2xl animate-flower-bloom" style={{
+                               '--tx': `${(Math.random() - 0.5) * 140}px`,
+                               '--ty': `${-20 - Math.random() * 60}px`,
+                               animationDelay: `${i * 0.09}s`
+                            }}>
+                               {['♾️', '💖', '🌙', '✨'][Math.floor(Math.random()*4)]}
+                            </div>
+                         ))}
                       </div>
-                      <h3 className="text-xl font-bold text-rose-600 font-dancing mt-4 mb-2">My Endless Future</h3>
-                      <p className="text-sm text-pink-800 font-nunito leading-tight">This gift holds all the tomorrows I want to spend making you smile. ♾️✨</p>
-                      <div className="flex justify-center gap-3 mt-4 text-xl">
+                    )}
+                    <div className="bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-xl border border-pink-100 text-center w-full max-w-[280px] relative">
+                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-fuchsia-50 rounded-full flex items-center justify-center border border-white shadow-md">
+                        <Heart className="w-6 h-6 text-fuchsia-500 animate-heartbeat" fill="currentColor" />
+                      </div>
+                      <h3 className="text-xl font-bold text-fuchsia-600 font-dancing mt-4 mb-2">My Endless Future</h3>
+                      <p className="text-sm text-fuchsia-800 font-nunito leading-relaxed mb-3">This gift holds all the tomorrows I want to spend making you smile and building our forever story.</p>
+                      <p className="text-rose-500 italic text-sm mb-3">Forever with you starts now ♾️💕</p>
+                      <div className="flex justify-center gap-4 text-2xl">
                         <span className="animate-float-slow" style={{animationDelay: '0s'}}>💖</span>
                         <span className="animate-float-slow" style={{animationDelay: '0.2s'}}>♾️</span>
                         <span className="animate-float-slow" style={{animationDelay: '0.4s'}}>🌙</span>
@@ -1694,15 +1816,15 @@ const App = () => {
                     </div>
                   </div>
 
-                  <div className={`relative z-20 transition-all duration-700 ${giftsOpened[6] ? 'translate-y-28 scale-75 opacity-60' : 'translate-y-0 hover:scale-105'}`}>
-                    <div className={`w-36 h-10 bg-gradient-to-b from-rose-300 to-fuchsia-400 rounded-sm border-2 border-fuchsia-400 relative z-20 shadow-md transition-all duration-1000 origin-bottom-right ${giftsOpened[6] ? 'transform -translate-y-24 translate-x-12 rotate-12 opacity-0' : ''}`}>
+                  <div className={`relative z-20 transition-all duration-700 ${giftsOpened[6] ? 'translate-y-28 scale-75 opacity-60' : 'translate-y-0 hover:scale-110'}`}>
+                    <div className={`w-36 h-10 bg-gradient-to-b from-fuchsia-300 to-purple-400 rounded-sm border-2 border-purple-400 relative z-20 shadow-lg hover:shadow-xl transition-shadow origin-bottom-right ${giftsOpened[6] ? 'transform -translate-y-24 translate-x-12 rotate-12 opacity-0' : ''}`}>
                       <div className="absolute left-1/2 -translate-x-1/2 w-8 h-full bg-white/70 border-x border-white/90"></div>
                       <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex items-end">
-                        <div className="w-8 h-8 border-[3px] border-fuchsia-100 rounded-[50%_50%_0_50%] transform rotate-45 translate-x-1"></div>
-                        <div className="w-8 h-8 border-[3px] border-fuchsia-100 rounded-[50%_50%_50%_0] transform -rotate-45 -translate-x-1"></div>
+                        <div className="w-8 h-8 border-[3px] border-purple-100 rounded-[50%_50%_0_50%] transform rotate-45 translate-x-1"></div>
+                        <div className="w-8 h-8 border-[3px] border-purple-100 rounded-[50%_50%_50%_0] transform -rotate-45 -translate-x-1"></div>
                       </div>
                     </div>
-                    <div className="w-32 h-24 bg-gradient-to-br from-rose-400 to-fuchsia-500 mx-auto rounded-b-md border-x-2 border-b-2 border-fuchsia-500 relative shadow-xl overflow-hidden">
+                    <div className="w-32 h-24 bg-gradient-to-br from-fuchsia-400 to-purple-500 mx-auto rounded-b-md border-x-2 border-b-2 border-purple-500 relative shadow-xl overflow-hidden hover:shadow-2xl transition-shadow group-hover:from-fuchsia-300 group-hover:to-purple-400">
                       <div className="absolute left-1/2 -translate-x-1/2 w-8 h-full bg-white/30 border-x border-white/40 shadow-inner"></div>
                     </div>
                   </div>
@@ -1711,38 +1833,21 @@ const App = () => {
 
             </div>
 
-            <div className="w-full h-12 flex justify-between items-center mt-2 pt-4 border-t border-pink-100/60 shrink-0">
-              <button
-                onClick={handlePrev}
-                disabled={currentGiftPage === 0 || isAnimating}
-                className={`p-2 rounded-full bg-white border border-pink-100 shadow-sm text-rose-400 transition-all duration-300 touch-press-effect ${currentGiftPage === 0 ? 'opacity-0 cursor-default' : 'hover:shadow-md hover:text-rose-500 active:scale-95'}`}
-                style={{ minHeight: '44px', minWidth: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >
-                <ChevronLeft size={20} />
-              </button>
-              
-              <div className="flex gap-2 items-center">
-                {[...Array(totalGifts)].map((_, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`h-1.5 rounded-full transition-all duration-500 ease-in-out ${
-                      idx === currentGiftPage 
-                        ? 'w-6 bg-rose-400 shadow-[0_0_8px_rgba(251,113,133,0.5)]' 
-                        : idx < currentGiftPage 
-                          ? 'w-1.5 bg-pink-300' 
-                          : 'w-1.5 bg-pink-100'
-                    }`}
-                  />
-                ))}
+            <div className="w-full flex justify-center items-center mt-2 pt-4 border-t border-pink-100/60 shrink-0 px-2">
+              <div className="w-full max-w-md">
+                <FooterNavigation
+                  currentIndex={currentGiftPage}
+                  totalItems={totalGifts}
+                  onPrevious={handlePrev}
+                  onNext={handleNext}
+                  isPrevDisabled={currentGiftPage === 0}
+                  isNextDisabled={currentGiftPage === totalGifts - 1}
+                  isAnimating={isAnimating}
+                  tabName={`Gift`}
+                  showProgressDots={true}
+                  customLabels={{ prev: 'Previous', next: 'Next' }}
+                />
               </div>
-              <button
-                onClick={handleNext}
-                disabled={currentGiftPage === totalGifts - 1}
-                className="p-2 rounded-full bg-white border border-pink-100 shadow-sm text-rose-400 hover:shadow-md disabled:opacity-0 touch-press-effect"
-                style={{ minHeight: '44px', minWidth: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >
-                <ChevronRight size={20} />
-              </button>
             </div>
           </div>
         );
@@ -1766,39 +1871,21 @@ const App = () => {
               {pages[currentPage].content}
             </div>
 
-            <div className="w-full flex justify-between items-center mt-4 pt-4 border-t border-pink-100/60 relative z-10 h-12 shrink-0">
-              <button
-                onClick={handlePrev}
-                disabled={currentPage === 0 || isAnimating}
-                className={`p-2 rounded-full bg-white border border-pink-100 shadow-sm text-rose-400 transition-all touch-press-effect ${currentPage === 0 ? 'opacity-0 cursor-default' : 'hover:shadow-md'}`}
-                style={{ minHeight: '44px', minWidth: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >
-                <ChevronLeft size={20} />
-              </button>
-              
-              <div className="flex gap-1.5 items-center">
-                {pages.map((_, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`h-1.5 rounded-full transition-all duration-500 ${
-                      idx === currentPage 
-                        ? 'w-6 bg-rose-400 shadow-[0_0_8px_rgba(251,113,133,0.5)]' 
-                        : idx < currentPage 
-                          ? 'w-1.5 bg-pink-300' 
-                          : 'w-1.5 bg-pink-100'
-                    }`}
-                  />
-                ))}
+            <div className="w-full flex justify-center items-center mt-4 pt-4 border-t border-pink-100/60 relative z-10 shrink-0 px-2">
+              <div className="w-full max-w-md">
+                <FooterNavigation
+                  currentIndex={currentPage}
+                  totalItems={pages.length}
+                  onPrevious={handlePrev}
+                  onNext={handleNext}
+                  isPrevDisabled={currentPage === 0}
+                  isNextDisabled={currentPage === pages.length - 1}
+                  isAnimating={isAnimating}
+                  tabName="Chapter"
+                  showProgressDots={true}
+                  customLabels={{ prev: 'Previous', next: 'Next' }}
+                />
               </div>
-
-              <button
-                onClick={handleNext}
-                disabled={currentPage === pages.length - 1 || isAnimating}
-                className={`p-2 rounded-full bg-white border border-pink-100 shadow-sm text-rose-400 transition-all touch-press-effect ${currentPage === pages.length - 1 ? 'opacity-0 cursor-default' : 'hover:shadow-md'}`}
-                style={{ minHeight: '44px', minWidth: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >
-                <ChevronRight size={20} />
-              </button>
             </div>
           </div>
         );
@@ -1813,56 +1900,150 @@ const App = () => {
               <div className="absolute top-5 left-5 w-24 h-24 bg-rose-200/30 rounded-full blur-2xl animate-pulse-slow" style={{animationDelay: '0s'}}></div>
               <div className="absolute top-32 right-8 w-32 h-32 bg-pink-200/30 rounded-full blur-2xl animate-pulse-slow" style={{animationDelay: '1s'}}></div>
               <div className="absolute bottom-20 left-1/4 w-28 h-28 bg-amber-200/30 rounded-full blur-2xl animate-pulse-slow" style={{animationDelay: '2s'}}></div>
+              <div className="absolute bottom-32 right-1/4 w-36 h-36 bg-purple-200/30 rounded-full blur-2xl animate-pulse-slow" style={{animationDelay: '3s'}}></div>
             </div>
 
             {/* Main Content Container */}
-            <div className="relative z-10 w-full flex flex-col items-center gap-6 sm:gap-8">
+            <div className="relative z-10 w-full flex flex-col items-center gap-8 sm:gap-10">
               
-              {/* Hero Section */}
-              <div className="w-full text-center relative mt-2">
-                <div className="inline-block relative mb-4">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-rose-300 via-pink-300 to-amber-300 rounded-full blur-lg opacity-50 animate-pulse"></div>
-                  <h1 className="relative text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-amber-600 font-dancing drop-shadow-lg">
-                    🎉 Celebrating YOU! 🎉
-                  </h1>
+              {/* PREMIUM HERO SECTION */}
+              <div className="w-full text-center relative mt-4 px-3">
+                <div className="space-y-4">
+                  {/* Main Title */}
+                  <div className="inline-block relative">
+                    <div className="absolute -inset-6 bg-gradient-to-r from-rose-400 via-pink-400 to-purple-400 rounded-3xl blur-2xl opacity-40 animate-pulse"></div>
+                    <h1 className="relative text-5xl sm:text-6xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600 font-dancing drop-shadow-lg px-6 py-3">
+                      🎉 YOU ARE AMAZING! 🎉
+                    </h1>
+                  </div>
+                  
+                  {/* Subtitle */}
+                  <p className="text-base sm:text-lg text-pink-700 font-nunito font-semibold tracking-wide">
+                    ✨ Today Celebrates Your Extraordinary Existence ✨
+                  </p>
+                  
+                  {/* Animated Emojis */}
+                  <div className="flex justify-center gap-3 mt-3">
+                    <span className="text-4xl animate-bounce" style={{animationDelay: '0s'}}>💖</span>
+                    <span className="text-4xl animate-bounce" style={{animationDelay: '0.15s'}}>✨</span>
+                    <span className="text-4xl animate-bounce" style={{animationDelay: '0.3s'}}>🌟</span>
+                    <span className="text-4xl animate-bounce" style={{animationDelay: '0.45s'}}>💕</span>
+                  </div>
+
+                  <div className="h-2 w-48 bg-gradient-to-r from-transparent via-rose-300 to-transparent mx-auto mt-2"></div>
                 </div>
-                
-                <p className="text-sm sm:text-base md:text-lg text-pink-600 font-nunito font-semibold tracking-wide mb-2">
-                  ✨ Every reason why you're extraordinary ✨
+              </div>
+
+              {/* WHY YOU'RE SPECIAL - ENHANCED CARD */}
+              <div className="w-full max-w-2xl bg-gradient-to-br from-white/95 via-rose-50/80 to-pink-50/60 rounded-3xl border-3 border-rose-200 p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-rose-100/20 to-pink-100/20 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-pink-700 font-dancing mb-6 text-center">
+                    💫 Why YOU Are So Special 💫
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="group bg-gradient-to-br from-rose-100 to-pink-100 rounded-2xl p-4 border-l-4 border-rose-400 hover:shadow-lg transition-all hover:scale-105 cursor-default">
+                      <p className="text-sm sm:text-base font-nunito font-bold text-rose-700 group-hover:text-rose-900">✨ You light up my world</p>
+                    </div>
+                    <div className="group bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl p-4 border-l-4 border-pink-400 hover:shadow-lg transition-all hover:scale-105 cursor-default">
+                      <p className="text-sm sm:text-base font-nunito font-bold text-pink-700 group-hover:text-pink-900">💕 You are my greatest treasure</p>
+                    </div>
+                    <div className="group bg-gradient-to-br from-purple-100 to-blue-100 rounded-2xl p-4 border-l-4 border-purple-400 hover:shadow-lg transition-all hover:scale-105 cursor-default">
+                      <p className="text-sm sm:text-base font-nunito font-bold text-purple-700 group-hover:text-purple-900">🌟 You make every day adventure</p>
+                    </div>
+                    <div className="group bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl p-4 border-l-4 border-blue-400 hover:shadow-lg transition-all hover:scale-105 cursor-default">
+                      <p className="text-sm sm:text-base font-nunito font-bold text-blue-700 group-hover:text-blue-900">🎉 Life is better with YOU</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* QUALITIES GRID - 3x3 */}
+              <div className="w-full max-w-2xl px-3">
+                <h3 className="text-center text-xl sm:text-2xl font-bold text-rose-600 font-dancing mb-5">
+                  🌈 Your Beautiful Qualities 🌈
+                </h3>
+                <div className="grid grid-cols-3 gap-2 sm:gap-3">
+                  <div className="group bg-gradient-to-br from-rose-50 to-pink-50 rounded-xl p-3 text-center border-2 border-rose-200 shadow-md hover:shadow-xl hover:shadow-rose-300/50 transition-all hover:scale-110 hover:-translate-y-2 cursor-pointer relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-rose-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative">
+                      <div className="text-3xl sm:text-4xl mb-2 animate-bounce">❤️</div>
+                      <p className="text-xs sm:text-sm font-nunito font-bold text-rose-700">Amazing</p>
+                    </div>
+                  </div>
+
+                  <div className="group bg-gradient-to-br from-pink-50 to-amber-50 rounded-xl p-3 text-center border-2 border-pink-200 shadow-md hover:shadow-xl hover:shadow-pink-300/50 transition-all hover:scale-110 hover:-translate-y-2 cursor-pointer relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-pink-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative">
+                      <div className="text-3xl sm:text-4xl mb-2 animate-bounce" style={{animationDelay: '0.1s'}}>✨</div>
+                      <p className="text-xs sm:text-sm font-nunito font-bold text-pink-700">Beautiful</p>
+                    </div>
+                  </div>
+
+                  <div className="group bg-gradient-to-br from-amber-50 to-rose-50 rounded-xl p-3 text-center border-2 border-amber-200 shadow-md hover:shadow-xl hover:shadow-amber-300/50 transition-all hover:scale-110 hover:-translate-y-2 cursor-pointer relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-amber-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative">
+                      <div className="text-3xl sm:text-4xl mb-2 animate-bounce" style={{animationDelay: '0.2s'}}>💎</div>
+                      <p className="text-xs sm:text-sm font-nunito font-bold text-amber-700">Precious</p>
+                    </div>
+                  </div>
+
+                  <div className="group bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-3 text-center border-2 border-purple-200 shadow-md hover:shadow-xl hover:shadow-purple-300/50 transition-all hover:scale-110 hover:-translate-y-2 cursor-pointer relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-purple-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative">
+                      <div className="text-3xl sm:text-4xl mb-2 animate-bounce" style={{animationDelay: '0.3s'}}>🌟</div>
+                      <p className="text-xs sm:text-sm font-nunito font-bold text-purple-700">Incredible</p>
+                    </div>
+                  </div>
+
+                  <div className="group bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl p-3 text-center border-2 border-cyan-200 shadow-md hover:shadow-xl hover:shadow-cyan-300/50 transition-all hover:scale-110 hover:-translate-y-2 cursor-pointer relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-cyan-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative">
+                      <div className="text-3xl sm:text-4xl mb-2 animate-bounce" style={{animationDelay: '0.4s'}}>💫</div>
+                      <p className="text-xs sm:text-sm font-nunito font-bold text-cyan-700">Radiant</p>
+                    </div>
+                  </div>
+
+                  <div className="group bg-gradient-to-br from-red-50 to-pink-50 rounded-xl p-3 text-center border-2 border-red-200 shadow-md hover:shadow-xl hover:shadow-red-300/50 transition-all hover:scale-110 hover:-translate-y-2 cursor-pointer relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-red-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative">
+                      <div className="text-3xl sm:text-4xl mb-2 animate-bounce" style={{animationDelay: '0.5s'}}>🔥</div>
+                      <p className="text-xs sm:text-sm font-nunito font-bold text-red-700">Awesome</p>
+                    </div>
+                  </div>
+
+                  <div className="group bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-3 text-center border-2 border-green-200 shadow-md hover:shadow-xl hover:shadow-green-300/50 transition-all hover:scale-110 hover:-translate-y-2 cursor-pointer relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-green-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative">
+                      <div className="text-3xl sm:text-4xl mb-2 animate-bounce" style={{animationDelay: '0.6s'}}>🌸</div>
+                      <p className="text-xs sm:text-sm font-nunito font-bold text-green-700">Wonderful</p>
+                    </div>
+                  </div>
+
+                  <div className="group bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-3 text-center border-2 border-indigo-200 shadow-md hover:shadow-xl hover:shadow-indigo-300/50 transition-all hover:scale-110 hover:-translate-y-2 cursor-pointer relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-indigo-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative">
+                      <div className="text-3xl sm:text-4xl mb-2 animate-bounce" style={{animationDelay: '0.7s'}}>⭐</div>
+                      <p className="text-xs sm:text-sm font-nunito font-bold text-indigo-700">Stellar</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* HEARTFELT MESSAGE */}
+              <div className="w-full max-w-2xl bg-gradient-to-r from-rose-100/60 via-pink-100/60 to-purple-100/60 border-3 border-rose-300 rounded-3xl p-6 sm:p-8 shadow-xl backdrop-blur-sm">
+                <p className="text-center text-sm sm:text-lg font-nunito font-bold text-rose-900 leading-relaxed">
+                  Today and every day, you deserve all the love, happiness, and joy in the world. 
+                  <br className="my-3"/>
+                  <span className="text-xl sm:text-2xl text-rose-700 font-black block mt-3">Thank you for being YOU! 💕</span>
                 </p>
-                
-                <div className="flex justify-center gap-2 mb-4">
-                  <span className="animate-bounce" style={{animationDelay: '0s'}}>💖</span>
-                  <span className="animate-bounce" style={{animationDelay: '0.2s'}}>✨</span>
-                  <span className="animate-bounce" style={{animationDelay: '0.4s'}}>🎊</span>
-                </div>
-
-                <div className="h-1 w-24 bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
               </div>
 
-              {/* Stats/Info Cards Row */}
-              <div className="grid grid-cols-3 gap-3 w-full max-w-sm">
-                <div className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-xl p-3 text-center border border-rose-200 shadow-md hover:shadow-lg transition-all hover:scale-105">
-                  <div className="text-2xl sm:text-3xl mb-1">❤️</div>
-                  <p className="text-xs font-nunito font-bold text-rose-700">Amazing</p>
-                </div>
-                <div className="bg-gradient-to-br from-pink-50 to-amber-50 rounded-xl p-3 text-center border border-pink-200 shadow-md hover:shadow-lg transition-all hover:scale-105">
-                  <div className="text-2xl sm:text-3xl mb-1">✨</div>
-                  <p className="text-xs font-nunito font-bold text-pink-700">Beautiful</p>
-                </div>
-                <div className="bg-gradient-to-br from-amber-50 to-rose-50 rounded-xl p-3 text-center border border-amber-200 shadow-md hover:shadow-lg transition-all hover:scale-105">
-                  <div className="text-2xl sm:text-3xl mb-1">💎</div>
-                  <p className="text-xs font-nunito font-bold text-amber-700">Precious</p>
-                </div>
-              </div>
-
-              {/* Special Night Celebration Button - Enhanced */}
+              {/* CTA BUTTONS SECTION */}
               <button
                 onClick={() => setShowNightCelebrationModal(true)}
                 className="relative group w-full max-w-sm"
-                style={{
-                  minHeight: '72px'
-                }}
+                style={{ minHeight: '72px' }}
               >
                 {/* Animated gradient background */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 group-hover:blur-2xl group-hover:scale-110" />
@@ -1891,23 +2072,18 @@ const App = () => {
                   ))}
 
                   <div className="relative flex items-center justify-center gap-3 flex-col sm:flex-row">
-                    <span className="text-3xl sm:text-4xl animate-bounce" style={{ animationDelay: '0s' }}>🌙</span>
-                    <div className="flex flex-col sm:flex-row items-center gap-2">
-                      <span className="text-white font-bold font-dancing text-lg sm:text-xl">Special Night</span>
-                      <span className="text-white font-bold font-dancing text-lg sm:text-xl">Celebration</span>
-                    </div>
+                    <span className="text-3xl sm:text-4xl animate-bounce">🌙</span>
+                    <span className="text-white font-bold font-dancing text-lg sm:text-xl">Night Fireworks</span>
                     <span className="text-2xl animate-spin-slow">✨</span>
                   </div>
                 </div>
               </button>
 
-              {/* Special Surprise Button - Coming Soon */}
+              {/* Special Surprise Video Button */}
               <button
                 onClick={() => setShowSpecialSurpriseModal(true)}
                 className="relative group w-full max-w-sm"
-                style={{
-                  minHeight: '72px'
-                }}
+                style={{ minHeight: '72px' }}
               >
                 {/* Animated gradient background */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-600 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 group-hover:blur-2xl group-hover:scale-110" />
@@ -1936,12 +2112,9 @@ const App = () => {
                   ))}
 
                   <div className="relative flex items-center justify-center gap-3 flex-col sm:flex-row">
-                    <span className="text-3xl sm:text-4xl animate-bounce" style={{ animationDelay: '0s' }}>🎁</span>
-                    <div className="flex flex-col sm:flex-row items-center gap-2">
-                      <span className="text-white font-bold font-dancing text-lg sm:text-xl">Special</span>
-                      <span className="text-white font-bold font-dancing text-lg sm:text-xl">Surprise!</span>
-                    </div>
-                    <span className="text-2xl animate-spin-slow">✨</span>
+                    <span className="text-3xl sm:text-4xl animate-bounce">🎁</span>
+                    <span className="text-white font-bold font-dancing text-lg sm:text-xl">Special Video</span>
+                    <span className="text-2xl animate-spin-slow">💫</span>
                   </div>
                 </div>
               </button>
@@ -2038,8 +2211,58 @@ const App = () => {
     }
   };
 
+  const bottomTabs = [
+    {
+      id: 'chapters',
+      label: 'Story',
+      title: 'Story Chapters',
+      icon: BookHeart,
+      onSelect: () => setActiveTab('chapters'),
+    },
+    {
+      id: 'cake',
+      label: 'Cake',
+      title: 'Birthday Cake',
+      icon: CakeIcon,
+      onSelect: () => {
+        setActiveTab('cake');
+        setCakeStep(0);
+      },
+    },
+    {
+      id: 'gift',
+      label: 'Gifts',
+      title: 'Special Gifts',
+      icon: GiftIcon,
+      onSelect: () => setActiveTab('gift'),
+    },
+    {
+      id: 'special',
+      label: 'Special',
+      title: 'Memory Vault',
+      icon: Crown,
+      onSelect: () => setActiveTab('special'),
+    },
+    {
+      id: 'celebration',
+      label: 'Party',
+      title: 'Celebration',
+      icon: Sparkles,
+      onSelect: () => {
+        setActiveTab('celebration');
+        setCelebrationFireworks([]);
+      },
+    },
+  ];
+
   return (
     <>
+      {showIntroMessage && (
+        <IntroMessage onComplete={() => {
+          setShowIntroMessage(false);
+        }} />
+      )}
+      
       <style>
         {`@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap');
           
@@ -2098,92 +2321,99 @@ const App = () => {
       </style>
 
       {/* Main Background */}
-      <div className="fixed inset-0 -z-10 flex items-center justify-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fecdd3 50%, #dbeafe 100%)' }}>
-        <div className="absolute inset-0 opacity-30">
+      <div className="fixed inset-0 -z-10 flex items-center justify-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fecdd3 35%, #f5d5f5 70%, #dbeafe 100%)' }}>
+        <div className="absolute inset-0 opacity-35">
           {/* Decorative circles */}
-          <div className="absolute top-10 left-10 w-40 h-40 rounded-full bg-pink-200 blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-56 h-56 rounded-full bg-rose-200 blur-3xl"></div>
-          <div className="absolute top-1/2 right-1/4 w-32 h-32 rounded-full bg-yellow-200 blur-3xl"></div>
+          <div className="absolute top-10 left-10 w-40 h-40 rounded-full bg-pink-300 blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-56 h-56 rounded-full bg-purple-300 blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/2 right-1/4 w-32 h-32 rounded-full bg-yellow-300 blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute bottom-1/3 left-1/3 w-40 h-40 rounded-full bg-rose-300 blur-3xl animate-pulse" style={{ animationDelay: '3s' }}></div>
         </div>
       </div>
 
       <div className="fixed inset-0 -z-10 flex flex-col" style={{ background: 'rgba(255, 255, 255, 0.4)', backdropFilter: 'blur(10px)' }}></div>
 
-      {/* Main Container */}
+      {/* Main Container - Single Page Scroll */}
       <div
-        className="flex flex-col items-center justify-start min-h-screen w-full max-w-full overflow-x-hidden overflow-y-auto"
+        className="flex min-h-[100dvh] w-full flex-col items-center overflow-x-hidden"
         style={{
-          minHeight: '100dvh',
-          paddingBottom: 'calc(112px + var(--safe-area-bottom))',
-          WebkitOverflowScrolling: 'touch'
+          scrollBehavior: 'smooth',
+          paddingBottom: 'calc(6.75rem + var(--safe-area-bottom))'
         }}
       >
         {/* Main Card */}
-        <div className="relative z-10 w-full max-w-full px-2 sm:px-4 flex flex-col items-center" style={{ marginTop: 'clamp(1rem, 5%, 3rem)' }}>
+        <div 
+          className="relative z-10 w-full flex flex-col items-center flex-1"
+          style={{
+            paddingLeft: 'max(0.5rem, clamp(0.5rem, 3vw, 2rem))',
+            paddingRight: 'max(0.5rem, clamp(0.5rem, 3vw, 2rem))',
+            paddingTop: 'clamp(0.75rem, 2.5vw, 2rem)',
+            paddingBottom: 'clamp(1rem, 4vw, 2rem)'
+          }}
+        >
           <div 
             className={`
-              w-full sm:max-w-lg bg-white/70 backdrop-blur-2xl border border-white/80 shadow-[0_8px_40px_rgba(253,164,175,0.2),inset_0_0_0_1px_rgba(255,255,255,0.5)] 
-              rounded-[2.5rem] p-4 sm:p-6 md:p-8 min-h-[500px] flex flex-col items-center relative overflow-visible
+              w-full max-w-5xl bg-white/70 backdrop-blur-2xl border border-white/80 shadow-[0_8px_40px_rgba(253,164,175,0.2),inset_0_0_0_1px_rgba(255,255,255,0.5)] 
+              rounded-[2.5rem] flex flex-col items-center relative
               page-transition ${isAnimating ? 'page-hidden' : 'page-visible'}
             `}
+            style={{
+              padding: 'clamp(1rem, 4vw, 2rem)',
+              paddingBottom: 'clamp(1.25rem, 4vw, 2.5rem)',
+              minHeight: 'auto',
+              maxHeight: 'none',
+              overflow: 'visible'
+            }}
           >
-            <div className="absolute top-0 inset-x-0 h-1/3 bg-gradient-to-b from-white/70 to-transparent pointer-events-none rounded-t-[2.5rem]"></div>
+            <div className="absolute top-0 inset-x-0 h-1/4 bg-gradient-to-b from-white/70 to-transparent pointer-events-none rounded-t-[2.5rem]"></div>
             
-            {renderContent()}
+            <div className="w-full relative z-10">
+              {renderContent()}
+            </div>
 
           </div>
         </div>
 
-        {/* Bottom Navigation */}
-        <div className="fixed bottom-0 left-0 right-0 z-50 w-full max-w-full px-2 sm:px-4" style={{ paddingBottom: `max(1rem, var(--safe-area-bottom))` }}>
-          <div className="w-full max-w-full mx-auto px-2 sm:px-0 mb-2 sm:mb-4">
-            <div className="bg-white/80 backdrop-blur-xl border border-pink-100 shadow-[0_8px_30px_rgba(253,164,175,0.3)] rounded-full p-2 sm:p-3 flex justify-between items-center relative gap-1 sm:gap-2">
-            
-            <button 
-              onClick={() => setActiveTab('chapters')}
-              className={`flex-1 flex flex-col items-center justify-center py-3 px-1 sm:px-2 rounded-full transition-all duration-300 touch-press-effect ${activeTab === 'chapters' ? 'text-rose-600 bg-pink-50' : 'text-pink-400'}`}
-              style={{ minHeight: '48px' }}
-            >
-              <BookHeart className="w-5 h-5 sm:w-6 sm:h-6 mb-0.5" />
-              <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider font-nunito leading-tight">Story</span>
-            </button>
+        {/* Bottom Tab Navigation - Fixed */}
+        <nav
+          className="fixed inset-x-0 bottom-0 z-50 w-full"
+          aria-label="Birthday sections"
+        >
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white via-white/96 to-transparent" />
+          <div
+            className="relative mx-auto w-full max-w-3xl px-2 pb-2 sm:px-4 sm:pb-3"
+            style={{ paddingBottom: 'max(0.5rem, var(--safe-area-bottom))' }}
+          >
+            <div className="grid grid-cols-5 gap-1 rounded-[1.45rem] border border-pink-100 bg-white/92 p-1.5 shadow-[0_16px_48px_rgba(244,63,94,0.18)] backdrop-blur-2xl sm:gap-2 sm:rounded-full sm:p-2">
+              {bottomTabs.map(({ id, label, title, icon: Icon, onSelect }) => {
+                const isActive = activeTab === id;
 
-            <div className="w-px h-6 sm:h-8 bg-pink-100 mx-0.5"></div>
-
-            <button 
-              onClick={() => { setActiveTab('cake'); setCakeStep(0); }}
-              className={`flex-1 flex flex-col items-center justify-center py-3 px-1 sm:px-2 rounded-full transition-all duration-300 touch-press-effect ${activeTab === 'cake' ? 'text-rose-600 bg-pink-50' : 'text-pink-400'}`}
-              style={{ minHeight: '48px' }}
-            >
-              <CakeIcon className="w-5 h-5 sm:w-6 sm:h-6 mb-0.5" />
-              <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider font-nunito leading-tight">Cake</span>
-            </button>
-
-            <div className="w-px h-6 sm:h-8 bg-pink-100 mx-0.5"></div>
-
-            <button 
-              onClick={() => setActiveTab('gift')}
-              className={`flex-1 flex flex-col items-center justify-center py-3 px-1 sm:px-2 rounded-full transition-all duration-300 touch-press-effect ${activeTab === 'gift' ? 'text-rose-600 bg-pink-50' : 'text-pink-400'}`}
-              style={{ minHeight: '48px' }}
-            >
-              <GiftIcon className="w-5 h-5 sm:w-6 sm:h-6 mb-0.5" />
-              <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider font-nunito leading-tight">Gifts</span>
-            </button>
-
-            <div className="w-px h-6 sm:h-8 bg-pink-100 mx-0.5"></div>
-
-            <button 
-              onClick={() => { setActiveTab('celebration'); setCelebrationFireworks([]); }}
-              className={`flex-1 flex flex-col items-center justify-center py-3 px-1 sm:px-2 rounded-full transition-all duration-300 touch-press-effect ${activeTab === 'celebration' ? 'text-rose-600 bg-pink-50' : 'text-pink-400'}`}
-              style={{ minHeight: '48px' }}
-            >
-              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 mb-0.5" />
-              <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-wider font-nunito leading-tight">Celebrate</span>
-            </button>
-
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={onSelect}
+                    title={title}
+                    aria-label={title}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`
+                      touch-press-effect flex min-h-[58px] min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem]
+                      px-1 py-2 font-nunito font-black transition-all duration-300 sm:min-h-[64px] sm:rounded-full sm:px-4
+                      ${isActive
+                        ? 'bg-gradient-to-br from-rose-500 via-pink-500 to-amber-400 text-white shadow-[0_12px_28px_rgba(225,29,72,0.24)]'
+                        : 'text-pink-600 hover:bg-pink-50 hover:text-rose-600 active:scale-95'}
+                    `}
+                  >
+                    <Icon className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" strokeWidth={2.4} />
+                    <span className="w-full truncate text-center text-[9px] uppercase leading-none tracking-[0.08em] sm:text-[11px] sm:tracking-[0.16em]">
+                      {label}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
-        </div>
+        </nav>
 
       </div>
 
