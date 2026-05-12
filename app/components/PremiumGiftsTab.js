@@ -194,33 +194,33 @@ const UnwrapBurst = ({ gift, isOpened }) => {
 
 const RevealCard = ({ gift, isOpened }) => (
   isOpened ? (
-  <div className="fixed left-1/2 top-1/2 z-50 w-[min(20rem,90vw)] -translate-x-1/2 -translate-y-1/2 animate-gift-reveal pointer-events-auto">
-    <div className={`relative rounded-3xl border-2 ${gift.revealBorder} bg-gradient-to-br ${gift.revealBg} px-6 pb-7 pt-9 text-center shadow-[0_25px_60px_rgba(225,29,72,0.24)]`}>
-      <div className="absolute -top-7 left-1/2 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-white to-pink-50 shadow-lg">
-        <Heart className={`h-7 w-7 ${gift.accent}`} fill="currentColor" />
+  <div className="fixed left-1/2 top-1/2 z-50 w-[min(18rem,80vw)] -translate-x-1/2 -translate-y-1/2 animate-gift-reveal pointer-events-auto max-h-[80vh] overflow-y-auto">
+    <div className={`relative rounded-2xl sm:rounded-3xl border-2 ${gift.revealBorder} bg-gradient-to-br ${gift.revealBg} px-2 sm:px-6 pb-3 sm:pb-7 pt-5 sm:pt-9 text-center shadow-[0_25px_60px_rgba(225,29,72,0.24)] overflow-hidden`}>
+      <div className="absolute -top-6 sm:-top-7 left-1/2 flex h-12 sm:h-14 w-12 sm:w-14 -translate-x-1/2 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-white to-pink-50 shadow-lg">
+        <Heart className={`h-6 sm:h-7 w-6 sm:w-7 ${gift.accent}`} fill="currentColor" />
       </div>
       
-      <div className="mb-2 flex justify-center gap-1">
-        <Sparkles className={`h-4 w-4 ${gift.accent}`} />
-        <Sparkles className={`h-4 w-4 ${gift.accent}`} />
-        <Sparkles className={`h-4 w-4 ${gift.accent}`} />
+      <div className="mb-1 sm:mb-2 flex justify-center gap-1">
+        <Sparkles className={`h-3 sm:h-4 w-3 sm:w-4 ${gift.accent}`} />
+        <Sparkles className={`h-3 sm:h-4 w-3 sm:w-4 ${gift.accent}`} />
+        <Sparkles className={`h-3 sm:h-4 w-3 sm:w-4 ${gift.accent}`} />
       </div>
       
-      <h3 className={`text-center font-dancing text-3xl font-bold ${gift.accent} leading-tight`}>
+      <h3 className={`text-center font-dancing text-lg sm:text-3xl font-bold ${gift.accent} leading-tight px-1 line-clamp-3 word-break`}>
         {gift.revealTitle}
       </h3>
       
-      <p className="mt-4 text-center font-nunito text-sm font-bold leading-7 text-pink-800/85">
+      <p className="mt-2 sm:mt-4 text-center font-nunito text-[11px] sm:text-sm font-bold leading-5 sm:leading-7 text-pink-800/85 px-1 word-break hyphens-auto">
         {gift.message}
       </p>
       
-      <div className="mt-5 h-px w-12 mx-auto bg-gradient-to-r from-transparent via-rose-300 to-transparent" />
+      <div className="mt-3 sm:mt-5 h-px w-8 sm:w-12 mx-auto bg-gradient-to-r from-transparent via-rose-300 to-transparent" />
       
-      <p className="mt-4 text-center font-nunito text-xs font-bold italic text-rose-500/90">
+      <p className="mt-2 sm:mt-4 text-center font-nunito text-[10px] sm:text-xs font-bold italic text-rose-500/90 px-1 word-break">
         &ldquo;{gift.note}&rdquo;
       </p>
       
-      <div className="mt-5 flex justify-center gap-1.5">
+      <div className="mt-3 sm:mt-5 flex justify-center gap-1.5">
         <div className="h-1.5 w-1.5 rounded-full bg-rose-300 animate-pulse" style={{animationDelay: '0s'}} />
         <div className="h-1.5 w-1.5 rounded-full bg-pink-300 animate-pulse" style={{animationDelay: '0.2s'}} />
         <div className="h-1.5 w-1.5 rounded-full bg-rose-300 animate-pulse" style={{animationDelay: '0.4s'}} />
@@ -349,7 +349,7 @@ const PremiumGiftsTab = ({
   };
 
   return (
-    <div className="relative w-full overflow-hidden rounded-[2rem] px-3 py-4 sm:px-5 sm:py-6">
+    <div className="relative w-full h-full overflow-hidden rounded-[2rem] px-3 py-4 sm:px-5 sm:py-6 flex flex-col items-center justify-center">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,247,237,0.72),rgba(255,228,230,0.52)_42%,rgba(219,234,254,0.46))]" />
       <div className="pointer-events-none absolute inset-0 opacity-[0.07] old-gift-grid" />
 
@@ -368,7 +368,7 @@ const PremiumGiftsTab = ({
         </div>
       ))}
 
-      <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center gap-5">
+      <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center justify-center gap-5">
         <div className="text-center">
           <p className="font-nunito text-[10px] font-extrabold uppercase tracking-[0.28em] text-rose-400">
             Gift {currentGiftPage + 1} of {giftCards.length}
@@ -387,7 +387,7 @@ const PremiumGiftsTab = ({
           <button
             type="button"
             onClick={() => !isOpened && onGiftOpen(currentGiftPage)}
-            className="group relative flex min-h-[26rem] w-full items-center justify-center rounded-[1.75rem] border border-white/80 bg-white/34 px-3 pt-24 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_22px_55px_rgba(244,63,94,0.13)] backdrop-blur transition-all duration-500 hover:bg-white/45 sm:min-h-[30rem] sm:pt-28"
+            className="group relative flex min-h-[26rem] w-full items-center justify-center rounded-[1.75rem] border border-white/80 bg-white/34 px-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_22px_55px_rgba(244,63,94,0.13)] backdrop-blur transition-all duration-500 hover:bg-white/45 sm:min-h-[30rem]"
             aria-label={isOpened ? `${gift.title} opened` : `Open ${gift.title}`}
           >
             <RevealCard gift={gift} isOpened={isOpened} />
@@ -397,7 +397,7 @@ const PremiumGiftsTab = ({
           </button>
         </section>
 
-        <div className="w-full rounded-[1.5rem] border border-rose-100 bg-white/78 p-3 shadow-sm backdrop-blur">
+        <div className="w-full max-w-md rounded-[1.5rem] border border-rose-100 bg-white/78 p-3 shadow-sm backdrop-blur mx-auto">
           <div className="mb-3 flex items-center justify-center gap-2">
             {giftCards.map((item, index) => (
               <button
@@ -418,7 +418,7 @@ const PremiumGiftsTab = ({
             ))}
           </div>
 
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
+          <div className="grid grid-cols-[auto_1fr_auto] items-center justify-center gap-2">
             <button
               type="button"
               onClick={onPrevious}
@@ -429,7 +429,7 @@ const PremiumGiftsTab = ({
               <ChevronLeft className="h-5 w-5" strokeWidth={2.7} />
             </button>
 
-            <div className="min-w-[4.25rem] rounded-2xl bg-rose-50 px-3 py-2 text-center">
+            <div className="min-w-[4.25rem] rounded-2xl bg-rose-50 px-3 py-2 text-center mx-auto">
               <p className="font-dancing text-2xl font-bold leading-none text-rose-600">
                 {currentGiftPage + 1}/{giftCards.length}
               </p>

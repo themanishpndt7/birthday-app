@@ -184,8 +184,8 @@ const GiftRevealCard = ({ gift, isOpened }) => {
   const BurstIcon = gift.BurstIcon;
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center p-4">
-      <div className="animate-reveal-bounce bg-white rounded-2xl border-2 border-white/80 shadow-2xl max-w-sm w-full">
+    <div className="absolute inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
+      <div className="animate-reveal-bounce bg-white rounded-2xl border-2 border-white/80 shadow-2xl max-w-sm w-full max-h-[85vh] overflow-hidden flex flex-col">
         {/* Burst Animation */}
         <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center">
           {burstPattern.map((point, index) => (
@@ -203,25 +203,25 @@ const GiftRevealCard = ({ gift, isOpened }) => {
         </div>
 
         {/* Content */}
-        <div className={`relative z-10 rounded-2xl border ${gift.revealBorder} bg-gradient-to-br ${gift.revealBg} px-6 py-8 text-center`}>
+        <div className={`relative z-10 rounded-2xl border ${gift.revealBorder} bg-gradient-to-br ${gift.revealBg} px-2 sm:px-6 py-5 sm:py-8 text-center overflow-hidden`}>
           <div className="absolute -top-6 left-1/2 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-white to-pink-50 shadow-lg">
             <Heart className={`h-6 w-6 ${gift.accent}`} fill="currentColor" />
           </div>
 
-          <h3 className={`font-dancing text-2xl font-bold ${gift.accent} mt-4`}>
+          <h3 className={`font-dancing text-lg sm:text-2xl font-bold ${gift.accent} mt-3 sm:mt-4 px-1 line-clamp-3`}>
             {gift.revealTitle}
           </h3>
 
-          <p className="mt-4 font-nunito text-sm font-bold leading-6 text-pink-800/82">
+          <p className="mt-2 sm:mt-4 font-nunito text-[11px] sm:text-sm font-bold leading-5 sm:leading-6 text-pink-800/82 px-1 word-break hyphens-auto">
             {gift.message}
           </p>
 
-          <p className="mt-4 font-nunito text-xs font-bold italic text-rose-500">
+          <p className="mt-2 sm:mt-4 font-nunito text-[10px] sm:text-xs font-bold italic text-rose-500 px-1 word-break">
             &ldquo;{gift.note}&rdquo;
           </p>
 
           {/* Decorative elements */}
-          <div className="mt-6 flex justify-center gap-2">
+          <div className="mt-3 sm:mt-6 flex justify-center gap-2">
             {Array.from({ length: 3 }).map((_, i) => (
               <Sparkles
                 key={`deco-${i}`}
