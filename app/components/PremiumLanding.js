@@ -168,7 +168,7 @@ const PremiumLanding = ({ onEnter }) => {
           <button
             type="button"
             onClick={handleEnterClick}
-            className="group mt-8 inline-flex min-h-14 w-full max-w-sm items-center justify-center gap-3 rounded-full border-2 border-rose-300 bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 px-7 py-4 font-nunito text-sm font-extrabold uppercase tracking-[0.2em] text-white shadow-[0_18px_44px_rgba(225,29,72,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_26px_55px_rgba(225,29,72,0.45)] active:translate-y-0 active:scale-95 sm:max-w-xs"
+            className="birthday-action-primary group mt-8 inline-flex min-h-14 w-full max-w-sm items-center justify-center gap-3 rounded-full px-7 py-4 font-nunito text-sm font-extrabold uppercase tracking-[0.2em] transition-all duration-300 active:translate-y-0 active:scale-95 sm:max-w-xs"
           >
             <span>Enter The Experience</span>
             <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -212,6 +212,18 @@ const PremiumLanding = ({ onEnter }) => {
               <div className="premium-stage relative mx-auto flex aspect-square w-48 items-center justify-center rounded-full border-2 border-dashed border-rose-200 bg-gradient-to-br from-pink-50 via-white to-amber-50 shadow-inner sm:w-56">
                 <div className="absolute h-[82%] w-[82%] rounded-full border border-rose-100" />
                 <div className="absolute h-[58%] w-[58%] rounded-full border border-amber-100" />
+                <div className="premium-constellation absolute h-[96%] w-[96%] rounded-full">
+                  {Array.from({ length: 8 }, (_, index) => (
+                    <span
+                      key={index}
+                      className="absolute h-2.5 w-2.5 rounded-full bg-rose-400 shadow-[0_0_14px_rgba(244,63,94,0.55)]"
+                      style={{
+                        left: `${50 + Math.cos((Math.PI * 2 * index) / 8) * 43}%`,
+                        top: `${50 + Math.sin((Math.PI * 2 * index) / 8) * 43}%`,
+                      }}
+                    />
+                  ))}
+                </div>
                 <div className="premium-crown flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-rose-500 via-pink-500 to-rose-600 text-white shadow-[0_18px_38px_rgba(225,29,72,0.38)] sm:h-32 sm:w-32">
                   <Crown className="h-14 w-14" />
                 </div>
@@ -264,6 +276,10 @@ const PremiumLanding = ({ onEnter }) => {
           animation: premiumCrown 3.4s ease-in-out infinite;
         }
 
+        .premium-constellation {
+          animation: premiumConstellation 16s linear infinite;
+        }
+
         .premium-orbit { animation: premiumOrbit 14s linear infinite; }
         .premium-orbit-reverse { animation: premiumOrbit 11s linear infinite reverse; }
 
@@ -278,6 +294,10 @@ const PremiumLanding = ({ onEnter }) => {
         }
 
         @keyframes premiumOrbit {
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes premiumConstellation {
           to { transform: rotate(360deg); }
         }
 

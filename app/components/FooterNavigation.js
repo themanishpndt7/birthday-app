@@ -26,7 +26,7 @@ const FooterNavigation = ({
   };
 
   return (
-    <div className="w-full rounded-[1.5rem] border border-pink-100 bg-white/78 p-3 shadow-sm backdrop-blur sm:p-4">
+    <div className="w-full rounded-[1.5rem] border border-white/80 bg-white/78 p-3 shadow-[0_16px_38px_rgba(244,63,94,0.13),inset_0_1px_0_rgba(255,255,255,0.75)] backdrop-blur sm:p-4">
       <div className="mb-3 text-center font-nunito text-[10px] font-extrabold uppercase tracking-[0.2em] text-pink-500 sm:text-xs">
         <span className="text-rose-600">{currentIndex + 1}</span>
         <span className="px-1 text-pink-300">/</span>
@@ -68,7 +68,7 @@ const FooterNavigation = ({
           onClick={onPrevious}
           disabled={isPrevDisabled || isAnimating}
           aria-label={customLabels.prev}
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-pink-200 bg-white px-3 font-nunito text-xs font-extrabold uppercase tracking-[0.14em] text-rose-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-pink-50 disabled:cursor-not-allowed disabled:opacity-35 sm:px-5 sm:text-sm"
+          className="birthday-action-soft inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-3 font-nunito text-xs font-extrabold uppercase tracking-[0.14em] transition-all duration-300 sm:px-5 sm:text-sm"
         >
           <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2.6} />
           <span className="hidden sm:inline">{customLabels.prev}</span>
@@ -88,7 +88,7 @@ const FooterNavigation = ({
           onClick={onNext}
           disabled={isNextDisabled || isAnimating}
           aria-label={customLabels.next}
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-pink-200 bg-white px-3 font-nunito text-xs font-extrabold uppercase tracking-[0.14em] text-rose-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-pink-50 disabled:cursor-not-allowed disabled:opacity-35 sm:px-5 sm:text-sm"
+          className="birthday-action-soft inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-3 font-nunito text-xs font-extrabold uppercase tracking-[0.14em] transition-all duration-300 sm:px-5 sm:text-sm"
         >
           <span className="hidden sm:inline">{customLabels.next}</span>
           <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2.6} />

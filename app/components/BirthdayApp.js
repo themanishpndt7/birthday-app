@@ -9,6 +9,7 @@ import BreakSealPage from './BreakSealPage';
 import PremiumCelebrationTab from './PremiumCelebrationTab';
 import PremiumGiftsTab from './PremiumGiftsTab';
 import SpecialMomentsTab from './SpecialMomentsTab';
+import GiftShowcasePopup from './GiftShowcasePopup';
 
 // --- Advanced Animation Wrappers ---
 const ElegantFade = ({ children, delay = 0 }) => (
@@ -51,6 +52,7 @@ const App = ({ startOpened = false, showIntroMessageOnOpen = true, onSealOpen } 
   // Multiple Gifts State (5 gifts)
   const [currentGiftPage, setCurrentGiftPage] = useState(0);
   const [giftsOpened, setGiftsOpened] = useState([false, false, false, false, false, false, false]); 
+  const [showGiftShowcase, setShowGiftShowcase] = useState(false);
   
   const [fireworks, setFireworks] = useState([]);
   const [giftParticles, setGiftParticles] = useState([]);
@@ -1307,6 +1309,7 @@ const App = ({ startOpened = false, showIntroMessageOnOpen = true, onSealOpen } 
           onGiftOpen={triggerGiftSparkles}
           onPrevious={handlePrev}
           onNext={handleNext}
+          onShowAllGifts={() => setShowGiftShowcase(true)}
         />
       );
     }
@@ -2384,7 +2387,7 @@ const App = ({ startOpened = false, showIntroMessageOnOpen = true, onSealOpen } 
             className="relative mx-auto w-full max-w-3xl px-2 pb-2 sm:px-4 sm:pb-3"
             style={{ paddingBottom: 'max(0.5rem, var(--safe-area-bottom))' }}
           >
-            <div className="grid grid-cols-5 gap-1 rounded-[1.45rem] border border-pink-100 bg-white/92 p-1.5 shadow-[0_16px_48px_rgba(244,63,94,0.18)] backdrop-blur-2xl sm:gap-2 sm:rounded-full sm:p-2">
+            <div className="grid grid-cols-5 gap-1 rounded-[1.45rem] border border-white/80 bg-white/86 p-1.5 shadow-[0_18px_56px_rgba(124,58,237,0.16),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-2xl sm:gap-2 sm:rounded-full sm:p-2">
               {bottomTabs.map(({ id, label, title, icon: Icon, onSelect }) => {
                 const isActive = activeTab === id;
 
@@ -2400,8 +2403,8 @@ const App = ({ startOpened = false, showIntroMessageOnOpen = true, onSealOpen } 
                       touch-press-effect flex min-h-[58px] min-w-0 flex-col items-center justify-center gap-1 rounded-[1.1rem]
                       px-1 py-2 font-nunito font-black transition-all duration-300 sm:min-h-[64px] sm:rounded-full sm:px-4
                       ${isActive
-                        ? 'bg-gradient-to-br from-rose-500 via-pink-500 to-amber-400 text-white shadow-[0_12px_28px_rgba(225,29,72,0.24)]'
-                        : 'text-pink-600 hover:bg-pink-50 hover:text-rose-600 active:scale-95'}
+                        ? 'bg-gradient-to-br from-rose-500 via-pink-500 to-amber-400 text-white shadow-[0_14px_34px_rgba(225,29,72,0.28),inset_0_1px_0_rgba(255,255,255,0.35)] scale-[1.02]'
+                        : 'text-pink-600 hover:bg-white hover:text-rose-600 hover:shadow-[0_10px_24px_rgba(244,63,94,0.10)] active:scale-95'}
                     `}
                   >
                     <Icon className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" strokeWidth={2.4} />
@@ -2515,47 +2518,50 @@ const App = ({ startOpened = false, showIntroMessageOnOpen = true, onSealOpen } 
 
       {/* Special Surprise Modal */}
       {showSpecialSurpriseModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 overflow-y-auto" style={{ animation: 'fadeIn 0.3s ease-out forwards' }}>
-          <div className="bg-gradient-to-br from-cyan-50 via-blue-50 to-violet-50 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[calc(100dvh-1.5rem)] sm:max-h-[90vh] overflow-hidden relative border-2 border-cyan-300 flex flex-col" style={{ animation: 'scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' }}>
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-slate-950/70 p-3 backdrop-blur-md sm:items-center sm:p-4" style={{ animation: 'fadeIn 0.3s ease-out forwards' }}>
+          <div className="relative flex max-h-[calc(100dvh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-[2rem] border border-white/18 bg-gradient-to-br from-slate-950 via-violet-950 to-rose-950 text-white shadow-[0_32px_120px_rgba(15,23,42,0.58)] sm:max-h-[90vh]" style={{ animation: 'scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' }}>
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(236,72,153,0.36),transparent_30%),radial-gradient(circle_at_82%_22%,rgba(34,211,238,0.26),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(251,191,36,0.18),transparent_34%)]" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-rose-400 via-violet-400 to-cyan-300" />
             
             {/* Close Button */}
             <button
               onClick={() => setShowSpecialSurpriseModal(false)}
-              className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 hover:bg-gray-100 transition-all shadow-lg"
+              className="birthday-icon-button absolute right-4 top-4 z-20 h-11 w-11 rounded-full text-rose-600"
+              aria-label="Close special video"
             >
               <span className="text-2xl">✕</span>
             </button>
 
             {/* Header */}
-            <div className="bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-600 p-8 text-center relative overflow-hidden">
+            <div className="relative p-5 pb-3 text-center sm:p-7 sm:pb-4">
               <div className="absolute inset-0 opacity-30">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer"></div>
               </div>
               <div className="relative">
                 <div className="text-6xl mb-3 animate-bounce">🎁</div>
-                <h2 className="text-2xl font-dancing text-white font-bold">Special Surprise</h2>
+                <h2 className="mt-2 font-dancing text-4xl font-bold leading-tight text-white sm:text-5xl">Special Surprise</h2>
               </div>
             </div>
 
             {/* Content */}
-            <div className="p-4 sm:p-8 space-y-6 flex-1 min-h-0 overflow-y-auto flex flex-col items-center">
-              <div className="w-full rounded-3xl overflow-hidden border-2 border-cyan-200 bg-black shadow-xl aspect-video max-w-xl mx-auto shrink-0">
+            <div className="relative flex min-h-0 flex-1 flex-col items-center gap-5 overflow-y-auto px-4 pb-5 sm:px-7 sm:pb-7">
+              <div className="w-full max-w-2xl mx-auto shrink-0 overflow-hidden rounded-[1.75rem] border border-white/20 bg-black p-2 shadow-[0_28px_80px_rgba(0,0,0,0.42)] aspect-video">
                 <iframe
                   src={specialSurpriseVideoUrl}
                   title="Special Surprise Video"
-                  className="w-full h-full"
+                  className="h-full w-full rounded-[1.25rem]"
                   allow="autoplay; encrypted-media; picture-in-picture"
                   allowFullScreen
                 />
               </div>
 
-              <div className="w-full max-w-xl space-y-4 text-center shrink-0">
-                <p className="text-gray-700 font-nunito text-sm sm:text-base leading-relaxed px-2">
+              <div className="w-full max-w-2xl shrink-0 space-y-4 text-center">
+                <p className="px-2 font-nunito text-sm font-semibold leading-relaxed text-white/76 sm:text-base">
                   A personal video message made just for you.
                 </p>
 
-                <div className="bg-gradient-to-r from-cyan-100 to-blue-100 rounded-2xl p-5 border-2 border-cyan-300 space-y-3 shadow-sm">
-                  <p className="text-sm text-cyan-800 font-nunito font-bold">
+                <div className="rounded-2xl border border-cyan-200/22 bg-cyan-100/10 p-5 shadow-sm backdrop-blur">
+                  <p className="text-sm text-cyan-100 font-nunito font-bold">
                     Special moments, beautifully presented
                   </p>
                   <div className="flex justify-center gap-2 pt-2">
@@ -2567,7 +2573,7 @@ const App = ({ startOpened = false, showIntroMessageOnOpen = true, onSealOpen } 
 
                 <button
                   onClick={() => setShowSpecialSurpriseModal(false)}
-                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all font-dancing text-lg shadow-lg hover:shadow-xl"
+                  className="birthday-action-primary w-full rounded-2xl px-4 py-3 font-nunito text-xs font-extrabold uppercase tracking-[0.16em] transition-all duration-300"
                 >
                   Close Surprise ✨
                 </button>
@@ -2580,6 +2586,14 @@ const App = ({ startOpened = false, showIntroMessageOnOpen = true, onSealOpen } 
           </div>
         </div>
       )}
+
+      {/* Gift Showcase Popup */}
+      <GiftShowcasePopup
+        isOpen={showGiftShowcase}
+        onClose={() => setShowGiftShowcase(false)}
+        giftsOpened={giftsOpened}
+        onGiftOpen={triggerGiftSparkles}
+      />
 
       <style jsx>{`
         @keyframes float {

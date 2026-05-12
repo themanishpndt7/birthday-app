@@ -105,7 +105,7 @@ const ExperienceWelcomePopup = ({ isOpen, onContinue }) => {
             <button
               type="button"
               onClick={onContinue}
-              className="group mt-7 inline-flex min-h-14 w-full max-w-xs items-center justify-center gap-3 rounded-full border-2 border-rose-300 bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 px-7 py-4 font-nunito text-sm font-extrabold uppercase tracking-[0.18em] text-white shadow-[0_18px_44px_rgba(225,29,72,0.36)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_26px_55px_rgba(225,29,72,0.46)] active:translate-y-0 active:scale-95"
+              className="birthday-action-primary group mt-7 inline-flex min-h-14 w-full max-w-xs items-center justify-center gap-3 rounded-full px-7 py-4 font-nunito text-sm font-extrabold uppercase tracking-[0.18em] transition-all duration-300 active:translate-y-0 active:scale-95"
             >
               <span>Begin The Journey</span>
               <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />

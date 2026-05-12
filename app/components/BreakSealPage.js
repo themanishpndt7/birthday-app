@@ -116,7 +116,7 @@ const BreakSealPage = ({
           <button
             type="button"
             onClick={onOpen}
-            className="group mt-8 inline-flex min-h-14 w-full max-w-sm items-center justify-center gap-3 rounded-full border-2 border-rose-300 bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 px-7 py-4 font-nunito text-sm font-extrabold uppercase tracking-[0.19em] text-white shadow-[0_18px_44px_rgba(225,29,72,0.34)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_26px_55px_rgba(225,29,72,0.45)] active:translate-y-0 active:scale-95 sm:max-w-xs"
+            className="birthday-action-primary group mt-8 inline-flex min-h-14 w-full max-w-sm items-center justify-center gap-3 rounded-full px-7 py-4 font-nunito text-sm font-extrabold uppercase tracking-[0.19em] transition-all duration-300 active:translate-y-0 active:scale-95 sm:max-w-xs"
           >
             <Heart className="h-5 w-5" fill="currentColor" />
             <span>Break Seal</span>
@@ -178,6 +178,9 @@ const BreakSealPage = ({
                 <div className="absolute h-32 w-32 rounded-full bg-rose-500/20 blur-2xl" />
                 <div className="seal-wax relative flex h-24 w-24 items-center justify-center rounded-full border-4 border-rose-300 bg-gradient-to-br from-rose-500 via-rose-600 to-pink-700 text-white shadow-[0_18px_42px_rgba(225,29,72,0.52)] sm:h-28 sm:w-28">
                   <div className="absolute inset-3 rounded-full border border-white/20" />
+                  <span className="seal-crack seal-crack-one" />
+                  <span className="seal-crack seal-crack-two" />
+                  <span className="seal-crack seal-crack-three" />
                   <Heart className="relative z-10 h-11 w-11 animate-heartbeat sm:h-12 sm:w-12" fill="currentColor" />
                   <span className="absolute -bottom-4 left-1/2 h-6 w-4 -translate-x-1/2 rounded-b-full bg-rose-700 shadow-md" />
                   <span className="absolute -bottom-2 left-7 h-4 w-2 rounded-b-full bg-rose-700/80" />
@@ -226,6 +229,22 @@ const BreakSealPage = ({
 
         .seal-flap { transform-style: preserve-3d; }
         .seal-wax { animation: sealWaxPulse 2.6s ease-in-out infinite; }
+        .seal-crack {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 2px;
+          height: 30px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.38);
+          transform-origin: top;
+          opacity: 0;
+          transition: opacity 300ms ease, transform 500ms ease;
+        }
+        .group:hover .seal-crack { opacity: 1; }
+        .seal-crack-one { transform: translate(-50%, -50%) rotate(24deg) translateY(14px); }
+        .seal-crack-two { transform: translate(-50%, -50%) rotate(-42deg) translateY(11px); height: 24px; }
+        .seal-crack-three { transform: translate(-50%, -50%) rotate(92deg) translateY(10px); height: 20px; }
         .seal-orbit { animation: sealOrbit 12s linear infinite; }
         .seal-orbit-reverse { animation: sealOrbit 10s linear infinite reverse; }
         .seal-star { animation: sealStar 2.8s ease-in-out infinite; }

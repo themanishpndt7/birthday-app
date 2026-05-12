@@ -1,6 +1,6 @@
 'use client';
 
-import { Crown, Flame, Gift as GiftIcon, Heart, Sparkles, Star, Stars, Ticket } from 'lucide-react';
+import { Crown, Flame, Gift as GiftIcon, Heart, Music, Sparkles, Star, Stars, Ticket, Video } from 'lucide-react';
 
 const qualityTiles = [
   { icon: Heart, label: 'Amazing', tone: 'rose', text: 'You make ordinary days feel warm.' },
@@ -18,14 +18,16 @@ const blessingCards = [
   { title: 'Sweet Surprises', text: 'May the tiny unexpected moments become your favorite memories.', icon: GiftIcon },
 ];
 
+const equalizerBars = [44, 68, 36, 82, 52, 74, 46, 88, 58, 72, 40, 64];
+
 const PremiumCelebrationTab = ({ daysAlive = 0, onNightCelebration, onSpecialSurprise }) => {
   return (
     <div className="relative w-full overflow-hidden rounded-[2rem] px-3 py-4 sm:px-4 sm:py-5">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(251,113,133,0.17),transparent_30%),radial-gradient(circle_at_85%_22%,rgba(251,191,36,0.16),transparent_28%),radial-gradient(circle_at_30%_90%,rgba(103,232,249,0.14),transparent_28%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,247,237,0.74),rgba(255,228,230,0.56)_36%,rgba(224,242,254,0.54)_72%,rgba(245,243,255,0.7))]" />
       <div className="pointer-events-none absolute inset-0 opacity-[0.065] celebration-grid" />
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {Array.from({ length: 18 }, (_, index) => (
+        {Array.from({ length: 26 }, (_, index) => (
           <span
             key={index}
             className="absolute rounded-full"
@@ -37,37 +39,76 @@ const PremiumCelebrationTab = ({ daysAlive = 0, onNightCelebration, onSpecialSur
               background: ['#fb7185', '#f9a8d4', '#fbbf24', '#67e8f9', '#a78bfa'][index % 5],
               animation: `celebrationFloat ${5.2 + (index % 6) * 0.4}s ease-in-out infinite`,
               animationDelay: `${(index % 7) * 0.22}s`,
-              boxShadow: '0 0 18px currentColor',
-              opacity: 0.45,
+              opacity: 0.48,
             }}
           />
         ))}
       </div>
 
       <div className="relative z-10 flex flex-col items-center gap-6">
-        <section className="celebration-hero relative w-full overflow-hidden rounded-[2rem] border border-rose-100 bg-white/76 px-4 py-7 text-center shadow-[0_24px_70px_rgba(225,29,72,0.18)] backdrop-blur sm:px-6">
-          <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-rose-400 via-pink-400 to-amber-300" />
-          <div className="absolute -right-16 top-12 h-44 w-44 rounded-full border border-rose-200/70 celebration-orbit" />
-          <div className="absolute -right-7 top-20 h-28 w-28 rounded-full border border-amber-200/80 celebration-orbit-reverse" />
+        <section className="party-console relative grid w-full overflow-hidden rounded-[2rem] border border-white/80 bg-white/72 shadow-[0_28px_84px_rgba(124,58,237,0.16)] backdrop-blur-xl lg:grid-cols-[1fr_0.86fr]">
+          <div className="relative overflow-hidden px-4 py-7 text-center sm:px-6 lg:text-left">
+            <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-rose-400 via-violet-500 to-cyan-400" />
+            <div className="absolute -left-14 top-10 h-44 w-44 rounded-full border border-rose-200/70 celebration-orbit" />
+            <div className="absolute -left-5 top-20 h-28 w-28 rounded-full border border-cyan-200/80 celebration-orbit-reverse" />
 
-          <div className="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full border-4 border-white bg-gradient-to-br from-rose-500 via-pink-500 to-amber-400 text-white shadow-[0_18px_42px_rgba(225,29,72,0.36)]">
-            <Crown className="h-10 w-10" />
-            <Sparkles className="absolute -right-1 -top-1 h-5 w-5 text-amber-100" />
+            <div className="relative mb-5 inline-flex h-20 w-20 items-center justify-center rounded-[1.7rem] border-4 border-white bg-gradient-to-br from-rose-500 via-pink-500 to-amber-400 text-white shadow-[0_18px_42px_rgba(225,29,72,0.36)]">
+              <Crown className="h-10 w-10" />
+              <Sparkles className="absolute -right-1 -top-1 h-5 w-5 text-amber-100" />
+            </div>
+
+            <p className="font-nunito text-[10px] font-extrabold uppercase tracking-[0.28em] text-rose-400">
+              Party Control Deck
+            </p>
+            <h2 className="mx-auto mt-2 max-w-lg font-dancing text-4xl font-bold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-violet-600 to-cyan-600 sm:text-5xl lg:mx-0">
+              You are the whole celebration.
+            </h2>
+            <p className="mx-auto mt-4 max-w-lg font-nunito text-sm font-bold leading-7 text-pink-800/76 sm:text-base lg:mx-0">
+              A brighter finale with a party deck, cinematic video frame, fireworks,
+              blessings, and a little sound-wave stage built just for this moment.
+            </p>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={onNightCelebration}
+                className="birthday-action-dark group inline-flex min-h-16 items-center justify-center gap-3 rounded-2xl px-5 font-nunito text-xs font-extrabold uppercase tracking-[0.16em] transition-all duration-300"
+              >
+                <Sparkles className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
+                Night Fireworks
+              </button>
+
+              <button
+                type="button"
+                onClick={onSpecialSurprise}
+                className="birthday-action-primary group inline-flex min-h-16 items-center justify-center gap-3 rounded-2xl px-5 font-nunito text-xs font-extrabold uppercase tracking-[0.16em] transition-all duration-300"
+              >
+                <Video className="h-5 w-5 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110" />
+                Special Video
+              </button>
+            </div>
           </div>
 
-          <p className="font-nunito text-[10px] font-extrabold uppercase tracking-[0.28em] text-rose-400">
-            Celebration Mode
-          </p>
-          <h2 className="mx-auto mt-2 max-w-md font-dancing text-4xl font-bold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-amber-500 sm:text-5xl">
-            You are the whole celebration.
-          </h2>
-          <p className="mx-auto mt-4 max-w-md font-nunito text-sm font-bold leading-7 text-pink-800/76 sm:text-base">
-            A premium finale with movement, wishes, fireworks, and one more
-            little surprise waiting for the perfect tap.
-          </p>
+          <div className="relative flex min-h-[22rem] items-center justify-center overflow-hidden border-t border-pink-100/80 bg-gradient-to-br from-slate-950 via-violet-950 to-rose-950 p-5 text-white lg:border-l lg:border-t-0">
+            <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_50%_35%,rgba(236,72,153,0.48),transparent_28%),radial-gradient(circle_at_25%_78%,rgba(34,211,238,0.32),transparent_26%)]" />
+            <div className="party-disc relative flex h-44 w-44 items-center justify-center rounded-full border border-white/20 bg-white/10 shadow-[0_0_80px_rgba(236,72,153,0.32)] backdrop-blur">
+              <div className="absolute h-[78%] w-[78%] rounded-full border border-white/15" />
+              <div className="absolute h-[50%] w-[50%] rounded-full border border-white/15" />
+              <Music className="relative h-16 w-16 text-white" />
+            </div>
+            <div className="absolute bottom-7 left-1/2 flex h-24 w-[82%] -translate-x-1/2 items-end justify-center gap-2">
+              {equalizerBars.map((height, index) => (
+                <span
+                  key={index}
+                  className="party-bar w-2 rounded-full bg-gradient-to-t from-cyan-300 via-pink-300 to-amber-200"
+                  style={{ height: `${height}%`, animationDelay: `${index * 0.08}s` }}
+                />
+              ))}
+            </div>
+          </div>
         </section>
 
-        <section className="grid w-full grid-cols-1 gap-3 sm:grid-cols-3">
+        <section className="grid w-full max-w-5xl mx-auto grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="celebration-metric rounded-2xl border border-rose-100 bg-white/78 px-4 py-5 text-center shadow-sm backdrop-blur">
             <p className="font-nunito text-[10px] font-extrabold uppercase tracking-[0.24em] text-rose-400">
               Blessed world
@@ -79,30 +120,24 @@ const PremiumCelebrationTab = ({ daysAlive = 0, onNightCelebration, onSpecialSur
               beautiful days
             </p>
           </div>
-
-          <button
-            type="button"
-            onClick={onNightCelebration}
-            className="celebration-action group rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-600 via-violet-600 to-pink-600 px-4 py-5 text-white shadow-[0_18px_42px_rgba(124,58,237,0.28)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(124,58,237,0.38)]"
-          >
-            <Sparkles className="mx-auto mb-3 h-7 w-7 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
-            <span className="block font-dancing text-2xl font-bold leading-none">Night Fireworks</span>
-            <span className="mt-2 block font-nunito text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/78">
-              Launch celebration
-            </span>
-          </button>
-
-          <button
-            type="button"
-            onClick={onSpecialSurprise}
-            className="celebration-action group rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-500 via-blue-600 to-violet-700 px-4 py-5 text-white shadow-[0_18px_42px_rgba(37,99,235,0.25)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(37,99,235,0.35)]"
-          >
-            <Ticket className="mx-auto mb-3 h-7 w-7 transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-110" />
-            <span className="block font-dancing text-2xl font-bold leading-none">Special Video</span>
-            <span className="mt-2 block font-nunito text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/78">
-              Open surprise
-            </span>
-          </button>
+          <div className="celebration-metric rounded-2xl border border-cyan-100 bg-white/78 px-4 py-5 text-center shadow-sm backdrop-blur">
+            <Ticket className="mx-auto mb-3 h-7 w-7 text-cyan-600" />
+            <p className="font-nunito text-[10px] font-extrabold uppercase tracking-[0.24em] text-cyan-600">
+              Secret pass
+            </p>
+            <p className="mt-2 font-dancing text-4xl font-bold leading-none text-rose-600">
+              VIP
+            </p>
+          </div>
+          <div className="celebration-metric rounded-2xl border border-amber-100 bg-white/78 px-4 py-5 text-center shadow-sm backdrop-blur">
+            <Heart className="mx-auto mb-3 h-7 w-7 text-amber-500" fill="currentColor" />
+            <p className="font-nunito text-[10px] font-extrabold uppercase tracking-[0.24em] text-amber-500">
+              Love level
+            </p>
+            <p className="mt-2 font-dancing text-4xl font-bold leading-none text-rose-600">
+              Max
+            </p>
+          </div>
         </section>
 
         <section className="w-full">
@@ -115,7 +150,7 @@ const PremiumCelebrationTab = ({ daysAlive = 0, onNightCelebration, onSpecialSur
             </h3>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="grid w-full max-w-5xl mx-auto grid-cols-2 gap-3 sm:grid-cols-3">
             {qualityTiles.map(({ icon: Icon, label, text, tone }, index) => (
               <article
                 key={label}
@@ -134,7 +169,7 @@ const PremiumCelebrationTab = ({ daysAlive = 0, onNightCelebration, onSpecialSur
           </div>
         </section>
 
-        <section className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
+        <section className="grid w-full max-w-5xl mx-auto grid-cols-1 gap-3 sm:grid-cols-2">
           {blessingCards.map(({ icon: Icon, title, text }) => (
             <article
               key={title}
@@ -154,18 +189,6 @@ const PremiumCelebrationTab = ({ daysAlive = 0, onNightCelebration, onSpecialSur
             </article>
           ))}
         </section>
-
-        <section className="relative w-full overflow-hidden rounded-[2rem] border border-rose-200 bg-gradient-to-br from-rose-100/70 via-white/80 to-amber-50/70 px-5 py-6 text-center shadow-[0_20px_54px_rgba(225,29,72,0.16)]">
-          <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-rose-300 to-transparent" />
-          <Heart className="mx-auto mb-3 h-8 w-8 text-rose-500 animate-heartbeat" fill="currentColor" />
-          <h3 className="font-dancing text-3xl font-bold text-rose-700">
-            Happy Birthday
-          </h3>
-          <p className="mx-auto mt-3 max-w-md font-nunito text-sm font-bold leading-7 text-pink-800/78">
-            You are loved more than words can hold. Today is yours, and every
-            part of this little world was built to remind you of that.
-          </p>
-        </section>
       </div>
 
       <style>{`
@@ -177,20 +200,28 @@ const PremiumCelebrationTab = ({ daysAlive = 0, onNightCelebration, onSpecialSur
         .celebration-grid {
           background-image:
             linear-gradient(rgba(225, 29, 72, 0.55) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(225, 29, 72, 0.30) 1px, transparent 1px);
+            linear-gradient(90deg, rgba(8, 145, 178, 0.30) 1px, transparent 1px);
           background-size: 34px 34px;
         }
 
-        .celebration-hero,
+        .party-console,
         .celebration-metric,
-        .celebration-action,
         .quality-tile,
         .blessing-card {
           transform-style: preserve-3d;
         }
 
-        .celebration-hero {
-          animation: celebrationHero 6.5s ease-in-out infinite;
+        .party-console {
+          animation: partyConsole 6.5s ease-in-out infinite;
+        }
+
+        .party-disc {
+          animation: partyDisc 8s linear infinite;
+        }
+
+        .party-bar {
+          animation: partyBar 1.3s ease-in-out infinite;
+          transform-origin: bottom;
         }
 
         .celebration-orbit { animation: celebrationOrbit 13s linear infinite; }
@@ -212,9 +243,18 @@ const PremiumCelebrationTab = ({ daysAlive = 0, onNightCelebration, onSpecialSur
           50% { transform: translate3d(12px, -18px, 0) scale(1.18); }
         }
 
-        @keyframes celebrationHero {
+        @keyframes partyConsole {
           0%, 100% { transform: rotateX(0deg) translateY(0); }
-          50% { transform: rotateX(2deg) translateY(-6px); }
+          50% { transform: rotateX(1.6deg) translateY(-6px); }
+        }
+
+        @keyframes partyDisc {
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes partyBar {
+          0%, 100% { transform: scaleY(0.54); opacity: 0.62; }
+          50% { transform: scaleY(1); opacity: 1; }
         }
 
         @keyframes celebrationOrbit {

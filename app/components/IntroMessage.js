@@ -152,7 +152,7 @@ const IntroMessage = ({ onComplete }) => {
           <button
             type="button"
             onClick={onComplete}
-            className="group mt-8 inline-flex min-h-14 w-full max-w-sm items-center justify-center gap-3 rounded-full border-2 border-rose-300 bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 px-7 py-4 font-nunito text-sm font-extrabold uppercase tracking-[0.19em] text-white shadow-[0_18px_44px_rgba(225,29,72,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_26px_55px_rgba(225,29,72,0.45)] active:translate-y-0 active:scale-95 sm:max-w-xs"
+            className="birthday-action-primary group mt-8 inline-flex min-h-14 w-full max-w-sm items-center justify-center gap-3 rounded-full px-7 py-4 font-nunito text-sm font-extrabold uppercase tracking-[0.19em] transition-all duration-300 active:translate-y-0 active:scale-95 sm:max-w-xs"
           >
             <span>Continue to the seal</span>
             <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
